@@ -4,7 +4,7 @@ CUVoC (CookUnity Voice of Customer) is an AI-native analysis pipeline that helps
 
 ## Process
 
-1. **Research:** establish a shared, evidence-based understanding of Voice of Customer.
+1. **Research:** establish a shared, evidence-based understanding of Voice of Customer. See [research](docs/research.md).
 2. **Dataset discovery:** inspect coverage, fields, data quality, and analytical limits.
 3. **Product and architecture design:** decide the user, decisions supported, system boundaries, and evaluation criteria.
 4. **Pipeline implementation:** build reproducible ingestion, preparation, theme analysis, and metrics.
@@ -14,3 +14,4 @@ CUVoC (CookUnity Voice of Customer) is an AI-native analysis pipeline that helps
 ## Documentation
 
 - [Assignment](docs/assignment.md)
+- [Research](docs/research.md)
