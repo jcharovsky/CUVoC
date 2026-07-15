@@ -10,7 +10,7 @@ This document records the **implemented architecture, its consequential decision
 
 The **Preparation process is encapsulated in `preparation/preparation.ipynb`**. The notebook loads local exports, presents the phase's code and reasoning in execution order, and remains output-free in version control to avoid sensitive data leakage.
 
-CUVoC contains a **local batch ingestion pipeline**. `preparation/scripts/data_ingestion.py` authenticates to the take-home API, retrieves metadata and all ticket pages, then saves local raw JSON artifacts under Git-ignored `preparation/data/` to prevent confidential data exposure.
+CUVoC contains a **local batch ingestion pipeline**. `preparation/modules/ingestion.py` authenticates to the take-home API, retrieves metadata and all ticket pages, then saves local raw JSON artifacts under Git-ignored `preparation/data/` to prevent confidential data exposure.
 
 ### Data Flow
 

@@ -18,7 +18,7 @@ import sys
 import tempfile
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any, Sequence
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -26,18 +26,22 @@ from urllib.request import Request, urlopen
 
 BASE_URL = "https://voc-analysis-tool.vercel.app/api/takehome/v1"
 API_KEY_ENV_VAR = "TAKEHOME_API_KEY"
-ENV_FILE = Path(".env")
 DEFAULT_LIMIT = 50
 MAX_ATTEMPTS = 3
+MODULE_DIRECTORY = Path(__file__).resolve().parent
+PREPARATION_DIRECTORY = MODULE_DIRECTORY.parent
+PROJECT_ROOT = PREPARATION_DIRECTORY.parent
+ENV_FILE = PROJECT_ROOT / ".env"
+DEFAULT_OUTPUT_DIR = PREPARATION_DIRECTORY / "data"
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     """Parse explicit filters so every ingestion run is reproducible."""
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("preparation/data"),
+        default=DEFAULT_OUTPUT_DIR,
         help="Directory for local API exports. Default: preparation/data",
     )
     parser.add_argument(
@@ -54,7 +58,7 @@ def parse_args() -> argparse.Namespace:
         default=DEFAULT_LIMIT,
         help=f"Tickets requested per page. Default: {DEFAULT_LIMIT}",
     )
-    return parser.parse_args()
+    return parser.parse_args(argv)
 
 
 def load_env_file(path: Path = ENV_FILE) -> None:
@@ -132,7 +136,12 @@ def validate_metadata(metadata: dict[str, Any]) -> None:
         )
 
 
-def fetch_all_tickets(args: argparse.Namespace, api_key: str) -> list[dict[str, Any]]:
+def fetch_all_tickets(
+    api_key: str,
+    limit: int,
+    start_date: str | None = None,
+    end_date: str | None = None,
+) -> list[dict[str, Any]]:
     """Follow ``next_cursor`` until the API reports that no further page exists."""
     tickets: list[dict[str, Any]] = []
     seen_ticket_ids: set[str] = set()
@@ -142,9 +151,9 @@ def fetch_all_tickets(args: argparse.Namespace, api_key: str) -> list[dict[str, 
     while True:
         # The cursor is the pagination state. Date filters apply only to the
         # initial request; subsequent requests continue from that cursor.
-        params: dict[str, Any] = {"limit": args.limit, "cursor": cursor}
+        params: dict[str, Any] = {"limit": limit, "cursor": cursor}
         if cursor is None:
-            params.update({"start_date": args.start_date, "end_date": args.end_date})
+            params.update({"start_date": start_date, "end_date": end_date})
 
         payload = fetch_json("/tickets", params, api_key)
         page_number += 1
@@ -195,21 +204,32 @@ def write_json(path: Path, payload: Any) -> None:
     temporary_path.replace(path)
 
 
-def main() -> int:
-    args = parse_args()
-    if args.limit < 1:
+def ingest(
+    output_dir: Path = DEFAULT_OUTPUT_DIR,
+    start_date: str | None = None,
+    end_date: str | None = None,
+    limit: int = DEFAULT_LIMIT,
+) -> int:
+    """Export API metadata and tickets to the selected local directory."""
+    if limit < 1:
         raise RuntimeError("--limit must be at least 1.")
 
     load_env_file()
     api_key = get_api_key()
     metadata = fetch_json("/meta", {}, api_key)
     validate_metadata(metadata)
-    tickets = fetch_all_tickets(args, api_key)
+    tickets = fetch_all_tickets(api_key, limit, start_date, end_date)
 
-    write_json(args.output_dir / "metadata.json", metadata)
-    write_json(args.output_dir / "tickets.json", tickets)
-    print(f"Saved metadata.json and {len(tickets)} unique tickets to {args.output_dir}.")
+    write_json(output_dir / "metadata.json", metadata)
+    write_json(output_dir / "tickets.json", tickets)
+    print(f"Saved metadata.json and {len(tickets)} unique tickets to {output_dir}.")
     return 0
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    """Run ingestion from the command line."""
+    args = parse_args(argv)
+    return ingest(args.output_dir, args.start_date, args.end_date, args.limit)
 
 
 if __name__ == "__main__":
