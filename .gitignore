@@ -1,6 +1,6 @@
 .env
 data/
-docs/tmp/
+/docs/planning.md
 .DS_Store
 __pycache__/
 .venv/

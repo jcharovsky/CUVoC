@@ -2,16 +2,16 @@
 
 CUVoC (CookUnity Voice of Customer) is an AI-native analysis pipeline that helps CookUnity's support and product leaders understand what customers are contacting support about, which themes are growing, and which issues appear tied to bad outcomes.
 
-## Process
+## Phases
 
-1. **Research:** establish a shared, evidence-based understanding of Voice of Customer. See [research](docs/research.md).
-2. **Dataset discovery:** inspect coverage, fields, data quality, and analytical limits.
-3. **Product and architecture design:** decide the user, decisions supported, system boundaries, and evaluation criteria.
-4. **Pipeline implementation:** build reproducible ingestion, preparation, theme analysis, and metrics.
-5. **Validation and insight development:** test the pipeline and turn its output into defensible findings.
-6. **Presentation and handoff:** deliver the interface or report, run instructions, and final documentation.
+1. **Research:** establish the theoretical Voice of Customer foundation that guides the product's evidence, privacy, and causality boundaries.
+2. **Preparation:** ingest, profile, clean, and select the dataset variables that support reliable analysis.
+3. **Modelling:** turn customer-message text into structured issue, subissue, sentiment, and emotion signals with a validated hybrid pipeline.
+4. **Analysis:** quantify trends, segments, and outcome associations, then prioritise evidence-backed findings.
+5. **Presentation:** communicate validated findings through a notebook and interactive dashboard, with a grounded assistant as an optional exploration aid.
 
 ## Documentation
 
 - [Assignment](docs/assignment.md)
 - [Research](docs/research.md)
+- [Architecture](docs/architecture.md)
