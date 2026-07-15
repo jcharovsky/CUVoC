@@ -25,6 +25,8 @@ CUVoC contains a **local batch ingestion pipeline**. `scripts/data_ingestion.py`
 | **Complete export before persistence** | A failed pagination run cannot be mistaken for a complete dataset. |
 | **Separate raw JSON artifacts** | API metadata remains available with the exported tickets. |
 | **Validation, retries, and deduplication** | Incompatible responses fail visibly, while transient failures and duplicate IDs are handled safely. |
+| **Outputless committed notebooks** | Git strips notebook output on staging, and `tools/check_notebook_outputs.py` rejects staged notebooks with executable state through the tracked pre-commit hook. Every clone enables the hook with `git config core.hooksPath .githooks`. |
+| **Local raw data** | `preparation/data/` is Git-ignored, so exported tickets do not enter version control. |
 
 ### Assumptions and Failure Modes
 
@@ -35,5 +37,6 @@ CUVoC contains a **local batch ingestion pipeline**. `scripts/data_ingestion.py`
 | **Responses match the required core schema.** | Missing metadata, invalid cursors, malformed ticket pages, and absent ticket IDs stop the run. |
 | **Ticket IDs are stable.** | Duplicates are skipped and reported to standard error. |
 | **A run can be interrupted.** | No partial target JSON file is written, but a failed pagination run retains no partial progress. |
+| **Notebook output can expose raw data.** | The Git filter removes output before staging, while the pre-commit check verifies the staged notebook content. |
 
 ## Next Steps

@@ -1,5 +1,5 @@
 .env
-data/
+preparation/data/
 /docs/planning.md
 .DS_Store
 __pycache__/
