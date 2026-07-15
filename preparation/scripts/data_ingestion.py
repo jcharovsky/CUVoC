@@ -3,7 +3,7 @@
 
 The script intentionally uses only Python's standard library so reviewers can
 run it without installing a package. It writes sensitive, local-only artifacts
-to ``data/raw`` by default:
+to ``preparation/data`` by default:
 
 * ``metadata.json``: the response from the API metadata endpoint.
 * ``tickets.json``: one top-level array containing all fetched ticket records.
@@ -37,8 +37,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("data/raw"),
-        help="Directory for local API exports. Default: data/raw",
+        default=Path("preparation/data"),
+        help="Directory for local API exports. Default: preparation/data",
     )
     parser.add_argument(
         "--start-date",
