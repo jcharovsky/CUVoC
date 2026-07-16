@@ -65,6 +65,12 @@ The **Enrichment notebook at `enrichment/enrichment.ipynb` imports the prepared 
 
 Ollama is the **local model runtime**. The model weights are downloaded with `ollama pull qwen3:8b`, while ticket text is supplied only to the local runtime. The [official Ollama documentation](https://docs.ollama.com/) covers installation and runtime configuration.
 
+### Text Profiling
+
+**Text profiling preserves one customer-message sequence per ticket.** It verifies that every collection is list-like and contains strings, normalizes the Parquet-loaded arrays into Python lists, and checks their lengths against `customer_message_count`.
+
+The source does not provide message-level timestamps. Later enrichment therefore preserves source-array order as message position, without treating that position as a chronological timestamp.
+
 ### Assumptions and Failure Modes
 
 | Assumption or failure mode | Pipeline behaviour |
@@ -72,6 +78,7 @@ Ollama is the **local model runtime**. The model weights are downloaded with `ol
 | **The local model fits available memory.** | Qwen3 8B is selected over larger variants to avoid memory pressure during enrichment. |
 | **The Ollama service is available locally.** | Model calls cannot begin until the local runtime and `qwen3:8b` model are available. |
 | **Local inference protects ticket text.** | The classifier must call only the local Ollama endpoint, never a cloud inference provider. |
+| **Message collections align with source counts.** | Profiling validates each sequence against `customer_message_count` before any model labels are added. |
 
 ## Next Steps
 
