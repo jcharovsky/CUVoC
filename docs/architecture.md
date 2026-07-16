@@ -55,7 +55,7 @@ CUVoC contains a **local batch ingestion pipeline**. `preparation/modules/ingest
 
 ## Enrichment
 
-The **Enrichment notebook has been initialized at `enrichment/enrichment.ipynb`**. It currently provides the documented notebook structure and shared library imports only; it does not yet load data, select a local model, or generate labels.
+The **Enrichment notebook at `enrichment/enrichment.ipynb` imports the prepared Parquet dataset** from its local `data/` directory. It does not yet select a local model or generate labels.
 
 ## Next Steps
 
