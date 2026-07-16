@@ -17,6 +17,10 @@ export const dashboardData = {
     { label: "Churn risk", value: "6.4%", change: "+1.1 pts", detail: "flagged conversations", tone: "negative" },
     { label: "First response", value: "42m", change: "−7m", detail: "median response time", tone: "positive" },
   ],
+  topSignal: {
+    title: "Delivery issues now drive nearly 1 in 4 support conversations.",
+    detail: "Volume rose 14.2%, with lower satisfaction and higher churn risk than the overall baseline.",
+  },
   themes: [
     { name: "Delivery experience", description: "Late, missed, or incorrect delivery", volume: 2348, share: 23.5, change: 14.2, csat: 2.8, churn: 9.4, color: "#ee5744" },
     { name: "Meal quality", description: "Taste, freshness, and preparation", volume: 1862, share: 18.6, change: 6.8, csat: 3.2, churn: 7.1, color: "#97225a" },

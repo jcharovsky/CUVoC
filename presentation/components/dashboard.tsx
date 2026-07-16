@@ -21,6 +21,7 @@ import {
   X,
 } from "lucide-react";
 import { dashboardData, type Theme } from "@/data/dashboard";
+import { ChatPanel } from "./chat-panel";
 import { VolumeChart } from "./volume-chart";
 
 const navigation = [
@@ -68,6 +69,7 @@ export function Dashboard() {
   const [period, setPeriod] = useState("Last 9 days");
   const [query, setQuery] = useState("");
   const [selectedTheme, setSelectedTheme] = useState("Delivery experience");
+  const [chatOpen, setChatOpen] = useState(false);
 
   const themes = useMemo(() => dashboardData.themes.filter((theme) => theme.name.toLowerCase().includes(query.toLowerCase())), [query]);
 
@@ -82,7 +84,7 @@ export function Dashboard() {
             <button className={`nav-item ${index === 0 ? "active" : ""}`} key={label} type="button"><Icon size={18} />{label}</button>
           ))}
           <p className="nav-label secondary">Tools</p>
-          <button className="nav-item" type="button"><Sparkles size={18} />Ask CUVoC<span className="beta">AI</span></button>
+          <button className="nav-item" type="button" onClick={() => { setChatOpen(true); setSidebarOpen(false); }}><Sparkles size={18} />Ask CUVoC<span className="beta">AI</span></button>
           <button className="nav-item" type="button"><SlidersHorizontal size={18} />Data quality</button>
         </nav>
         <div className="sidebar-foot">
@@ -99,7 +101,7 @@ export function Dashboard() {
           <div className="breadcrumbs"><span>Voice of Customer</span><b>/</b><strong>Overview</strong></div>
           <div className="topbar-actions">
             <button className="icon-button" aria-label="Notifications"><Bell size={19} /><i /></button>
-            <button className="ask-button"><Sparkles size={16} />Ask about the data</button>
+            <button className="ask-button" type="button" onClick={() => setChatOpen(true)}><Sparkles size={16} />Ask about the data</button>
           </div>
         </header>
 
@@ -118,7 +120,7 @@ export function Dashboard() {
 
           <section className="insight-strip">
             <span className="insight-icon"><Sparkles size={18} /></span>
-            <div><span>Top signal</span><strong>Delivery issues now drive nearly 1 in 4 support conversations.</strong><p>Volume rose 14.2%, with lower satisfaction and higher churn risk than the overall baseline.</p></div>
+            <div><span>Top signal</span><strong>{dashboardData.topSignal.title}</strong><p>{dashboardData.topSignal.detail}</p></div>
             <button type="button">Explore signal <ArrowUpRight size={15} /></button>
           </section>
 
@@ -149,6 +151,7 @@ export function Dashboard() {
           <p className="data-note">Illustrative dashboard data. Final metrics populate from the validated analysis pipeline.</p>
         </div>
       </main>
+      <ChatPanel open={chatOpen} onClose={() => setChatOpen(false)} />
     </div>
   );
 }

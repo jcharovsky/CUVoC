@@ -84,9 +84,20 @@ The source does not provide message-level timestamps. Later enrichment therefore
 
 ### System Overview
 
-The Presentation phase is a self-contained responsive Next.js application in `presentation/`. Its `app/page.tsx` route renders the interactive dashboard from `components/`, while `data/dashboard.ts` provides the typed boundary that later analysis artifacts replace.
+The Presentation phase is a self-contained responsive Next.js application in `presentation/`. Its `app/page.tsx` route renders the interactive dashboard from `components/`, while `data/dashboard.ts` provides the typed boundary that later analysis artifacts replace. The displayed metrics, trends, themes, top signal, and written signal analysis all come from this shared source.
 
-The overview includes workspace navigation, reporting-period controls, key outcome metrics, an SVG trend view, prioritized signals, and searchable theme exploration. Its current values are explicitly labeled as illustrative because the Analysis phase has not produced validated dashboard artifacts yet.
+The overview includes workspace navigation, reporting-period controls, key outcome metrics, an SVG trend view, prioritized signals, searchable theme exploration, and a compact question-and-answer panel. Its current values are explicitly labeled as illustrative because the Analysis phase has not produced validated dashboard artifacts yet.
+
+The assistant is encapsulated behind `POST /api/chat`. The route validates the latest browser-local user question, supplies an explicit allowlist of aggregate `dashboardData` fields to an OpenAI Responses model through Vercel AI SDK, and streams the answer to `components/chat-panel.tsx`. The API key and optional model override remain server-side environment variables.
+
+### Data Flow
+
+1. The dashboard and server-side assistant import the same typed `dashboardData` artifact.
+2. Either Ask control opens the browser-local chat panel without navigating away from the overview.
+3. The panel sends its messages to `POST /api/chat` and displays `Thinking...` until response text begins streaming.
+4. The route accepts only the latest text-only user question, rejects malformed input, and limits the question to 500 characters. Client-supplied assistant history never reaches the model.
+5. The route combines the question with instructions and an allowlisted projection of aggregate metrics, chart series, themes, and written analysis, then requests at most 300 output tokens from the configured OpenAI model.
+6. OpenAI response storage is disabled, and the streamed answer remains only in the mounted browser session.
 
 ### Design Decisions
 
@@ -95,8 +106,15 @@ The overview includes workspace navigation, reporting-period controls, key outco
 | **Self-contained Presentation phase** | Framework configuration, dependencies, public assets, components, and data contracts share one phase-owned application root. |
 | **Vercel Presentation root** | The Vercel project uses `presentation` as its Root Directory for builds and deployments. |
 | **Typed local data boundary** | Placeholder values can be replaced with validated static artifacts or an API without changing the visual components. |
+| **One source for visuals and answers** | An explicit allowlist derives the assistant context from the same metrics, chart series, and analysis text that the dashboard renders, preventing drift without exposing unrelated future fields. |
 | **Dependency-light charting** | The initial trend chart uses accessible SVG markup and avoids committing to a visualization library before analytical requirements stabilize. |
 | **Explicit illustrative-data label** | Placeholder findings cannot be mistaken for results from the ticket analysis. |
+| **Direct OpenAI integration** | Vercel AI SDK handles browser chat state and response streaming, while the direct provider keeps a single inference dependency and server-held credential. |
+| **Full-context grounding** | The small curated artifact fits in every request, so retrieval, vector storage, file search, graph vision, tools, and web access add no useful capability. |
+| **Stateless, single-question endpoint** | Conversation display stays in the browser, while each model request receives only the latest question. This avoids a database, fabricated assistant history, user identity, and a retention policy. |
+| **Bounded assistant interface** | Question length, output length, text-only content, explicit context fields, and scope instructions constrain cost, data exposure, and off-topic behavior. |
+| **Aggregate-only cloud boundary** | Raw tickets and customer messages remain in the local pipeline. Only allowlisted curated aggregates and written findings enter an OpenAI request. |
+| **Minimal chat surface** | A single drawer, message list, input, streaming state, and error state cover the intended interaction without competing with the dashboard. |
 
 ### Assumptions and Failure Modes
 
@@ -106,6 +124,12 @@ The overview includes workspace navigation, reporting-period controls, key outco
 | **The dashboard is viewed on different devices.** | Navigation collapses on small screens, metric cards reflow, and wide tabular content scrolls horizontally. |
 | **JavaScript is available.** | Search, theme selection, reporting-period selection, and mobile navigation use client-side state. |
 | **A future artifact changes shape.** | The typed data boundary makes incompatible values fail during the production build. |
+| **`OPENAI_API_KEY` is absent.** | The chat endpoint returns `503`, and the panel reports that the assistant is unavailable while the dashboard remains usable. |
+| **The model or provider request fails.** | The streaming request ends in an inline error without affecting dashboard state. |
+| **A question is unrelated or unsupported.** | Model instructions require a fixed scope response for off-topic questions and an explicit insufficient-data response for unsupported dashboard questions. |
+| **A client sends oversized, malformed, non-text, or role-invalid messages.** | Server validation rejects the request before inference. |
+| **The public endpoint is abused.** | Application-level message and output bounds limit each request, but deployment-level rate limiting and account budgets remain required operational controls. |
+| **The panel is closed or the page reloads.** | The in-memory conversation is discarded because no chat data is persisted. |
 
 ## Next Steps
 
