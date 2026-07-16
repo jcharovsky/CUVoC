@@ -55,7 +55,23 @@ CUVoC contains a **local batch ingestion pipeline**. `preparation/modules/ingest
 
 ## Enrichment
 
-The **Enrichment notebook at `enrichment/enrichment.ipynb` imports the prepared Parquet dataset** from its local `data/` directory. It does not yet select a local model or generate labels.
+### System Overview
+
+The **Enrichment notebook at `enrichment/enrichment.ipynb` imports the prepared Parquet dataset** from its local `data/` directory. Qwen3 8B is installed locally through Ollama as `qwen3:8b`; no ticket text has yet been sent to the model.
+
+### Model Selection
+
+**Qwen3 8B is the selected model for local ticket classification.** Its 5.2 GB Q4 quantization leaves practical headroom on the M1 Pro with 16 GB unified memory, while Ollama uses Apple Metal acceleration for inference.
+
+Ollama is the **local model runtime**. The model weights are downloaded with `ollama pull qwen3:8b`, while ticket text is supplied only to the local runtime. The [official Ollama documentation](https://docs.ollama.com/) covers installation and runtime configuration.
+
+### Assumptions and Failure Modes
+
+| Assumption or failure mode | Pipeline behaviour |
+| --- | --- |
+| **The local model fits available memory.** | Qwen3 8B is selected over larger variants to avoid memory pressure during enrichment. |
+| **The Ollama service is available locally.** | Model calls cannot begin until the local runtime and `qwen3:8b` model are available. |
+| **Local inference protects ticket text.** | The classifier must call only the local Ollama endpoint, never a cloud inference provider. |
 
 ## Next Steps
 
