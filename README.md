@@ -18,3 +18,13 @@ The pipeline has four phases:
 - [Assignment](docs/assignment.md)
 - [Research](docs/research.md)
 - [Architecture](docs/architecture.md)
+
+## Dashboard
+
+The interactive dashboard runs as a self-contained Next.js application in `presentation/`. It currently presents an illustrative overview shell with responsive navigation, period controls, metrics, trends, signals, and theme exploration.
+
+```bash
+cd presentation
+npm install
+npm run dev
+```

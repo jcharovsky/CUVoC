@@ -7,3 +7,6 @@ __pycache__/
 .venv/
 *.py[cod]
 *.log
+.next/
+node_modules/
+*.tsbuildinfo

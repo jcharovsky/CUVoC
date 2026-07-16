@@ -80,6 +80,33 @@ The source does not provide message-level timestamps. Later enrichment therefore
 | **Local inference protects ticket text.** | The classifier must call only the local Ollama endpoint, never a cloud inference provider. |
 | **Message collections align with source counts.** | Profiling validates each sequence against `customer_message_count` before any model labels are added. |
 
+## Presentation
+
+### System Overview
+
+The Presentation phase is a self-contained responsive Next.js application in `presentation/`. Its `app/page.tsx` route renders the interactive dashboard from `components/`, while `data/dashboard.ts` provides the typed boundary that later analysis artifacts replace.
+
+The overview includes workspace navigation, reporting-period controls, key outcome metrics, an SVG trend view, prioritized signals, and searchable theme exploration. Its current values are explicitly labeled as illustrative because the Analysis phase has not produced validated dashboard artifacts yet.
+
+### Design Decisions
+
+| Decision | Rationale |
+| --- | --- |
+| **Self-contained Presentation phase** | Framework configuration, dependencies, public assets, components, and data contracts share one phase-owned application root. |
+| **Vercel Presentation root** | The Vercel project uses `presentation` as its Root Directory for builds and deployments. |
+| **Typed local data boundary** | Placeholder values can be replaced with validated static artifacts or an API without changing the visual components. |
+| **Dependency-light charting** | The initial trend chart uses accessible SVG markup and avoids committing to a visualization library before analytical requirements stabilize. |
+| **Explicit illustrative-data label** | Placeholder findings cannot be mistaken for results from the ticket analysis. |
+
+### Assumptions and Failure Modes
+
+| Assumption or failure mode | Dashboard behaviour |
+| --- | --- |
+| **Analysis outputs are not available yet.** | Typed illustrative values exercise every primary dashboard surface. |
+| **The dashboard is viewed on different devices.** | Navigation collapses on small screens, metric cards reflow, and wide tabular content scrolls horizontally. |
+| **JavaScript is available.** | Search, theme selection, reporting-period selection, and mobile navigation use client-side state. |
+| **A future artifact changes shape.** | The typed data boundary makes incompatible values fail during the production build. |
+
 ## Next Steps
 
 TBD
