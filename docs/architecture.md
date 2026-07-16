@@ -24,6 +24,7 @@ CUVoC contains a **local batch ingestion pipeline**. `preparation/modules/ingest
 4. It atomically writes `metadata.json` and `tickets.json` after the complete export succeeds.
 5. The notebook loads those artifacts into tabular structures and profiles schema alignment, coverage, data quality, and categorical distributions.
 6. It copies the raw ticket table into `prepared_tickets`, casts `ticket_date`, `has_churn`, `plan_size`, `first_response_minutes`, and `csat`, then validates the prepared dataset.
+7. It writes `prepared_tickets.parquet` to Git-ignored `enrichment/data/`, the input directory owned by the next phase.
 
 ### Design Decisions
 
@@ -51,6 +52,10 @@ CUVoC contains a **local batch ingestion pipeline**. `preparation/modules/ingest
 | **Dates and analytical fields can be cast safely.** | Cleaning coerces invalid dates or numeric values to missing, uses nullable types where needed, and validates the resulting dataset. |
 | **Sparse fields can support every planned comparison.** | `event_category` and `csat` have limited coverage, so later analysis must account for their smaller populations. |
 | **Notebook output can expose raw data.** | The Git filter removes output before staging, while the pre-commit check verifies the staged notebook content. |
+
+## Enrichment
+
+The **Enrichment notebook has been initialized at `enrichment/enrichment.ipynb`**. It currently provides the documented notebook structure and shared library imports only; it does not yet load data, select a local model, or generate labels.
 
 ## Next Steps
 
