@@ -219,4 +219,7 @@ The assistant is encapsulated behind `POST /api/chat`. The route validates the l
 
 ## Next Steps
 
-TBD
+1. **Production infrastructure:** move local processing to secure company infrastructure, then run a stronger open-weight model to improve classification quality and throughput across all tickets.
+2. **Evaluation and taxonomy:** expand the prompt-development and held-out evaluation samples, then define themes and sentiment criteria with the teams that will use the findings.
+3. **Analysis scope:** identify additional trends, segments, and outcome relationships that matter for CookUnity decisions.
+4. **Assistant optimisation:** test model, reasoning, verbosity, and prompt settings with intended users to refine the chat experience.
