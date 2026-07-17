@@ -1,0 +1,947 @@
+{
+  "coverage": {
+    "start_date": "2026-04-23",
+    "end_date": "2026-05-01",
+    "tickets": 972
+  },
+  "charts": [
+    {
+      "id": "customer-themes",
+      "title": "Customer Themes",
+      "kind": "bar",
+      "data": [
+        {
+          "theme": "Duplicate order",
+          "tickets": 30,
+          "average_sentiment": -0.645,
+          "negative_message_share": 0.6888888888888889,
+          "ticket_share": 0.030864197530864196
+        },
+        {
+          "theme": "Price transparency",
+          "tickets": 37,
+          "average_sentiment": -0.5277992277992278,
+          "negative_message_share": 0.5512870012870014,
+          "ticket_share": 0.03806584362139918
+        },
+        {
+          "theme": "Delivery rescheduling",
+          "tickets": 42,
+          "average_sentiment": -0.24863945578231292,
+          "negative_message_share": 0.29625850340136056,
+          "ticket_share": 0.043209876543209874
+        },
+        {
+          "theme": "Delivery status",
+          "tickets": 43,
+          "average_sentiment": -0.2054263565891473,
+          "negative_message_share": 0.32170542635658916,
+          "ticket_share": 0.044238683127572016
+        },
+        {
+          "theme": "Missing meal",
+          "tickets": 45,
+          "average_sentiment": -0.4703703703703704,
+          "negative_message_share": 0.5092592592592593,
+          "ticket_share": 0.046296296296296294
+        },
+        {
+          "theme": "Incorrect delivery procedure",
+          "tickets": 53,
+          "average_sentiment": -0.8503144654088051,
+          "negative_message_share": 0.8761006289308175,
+          "ticket_share": 0.05452674897119342
+        },
+        {
+          "theme": "Meal damage",
+          "tickets": 55,
+          "average_sentiment": -0.8536363636363636,
+          "negative_message_share": 0.8903030303030304,
+          "ticket_share": 0.056584362139917695
+        },
+        {
+          "theme": "Subscription cancellation",
+          "tickets": 60,
+          "average_sentiment": -0.3236111111111111,
+          "negative_message_share": 0.34444444444444444,
+          "ticket_share": 0.06172839506172839
+        },
+        {
+          "theme": "Missing promotion",
+          "tickets": 63,
+          "average_sentiment": -0.7837301587301587,
+          "negative_message_share": 0.8226190476190477,
+          "ticket_share": 0.06481481481481481
+        },
+        {
+          "theme": "Payment processing",
+          "tickets": 91,
+          "average_sentiment": -0.6557180914323771,
+          "negative_message_share": 0.6677893535036392,
+          "ticket_share": 0.09362139917695474
+        },
+        {
+          "theme": "Order cancellation",
+          "tickets": 125,
+          "average_sentiment": -0.3826666666666667,
+          "negative_message_share": 0.4066666666666667,
+          "ticket_share": 0.1286008230452675
+        },
+        {
+          "theme": "Meal replacement",
+          "tickets": 159,
+          "average_sentiment": -0.7948285641681868,
+          "negative_message_share": 0.8455173931589025,
+          "ticket_share": 0.16358024691358025
+        }
+      ],
+      "findings": [
+        "**Meal replacement and order cancellation are the most common reasons customers contact support, with 159 and 125 tickets respectively.** Together, they represent almost three in ten tickets in this sample.",
+        "Meal replacement is much more **negative** than order cancellation. Meal damage, incorrect delivery procedure, missing promotion, and meal quality also combine meaningful volume with strongly **negative** customer language.",
+        "A **Theme** is the message-based description of what a customer is contacting support about. Bar length and the number beside it show **Ticket Amount**. Colour shows **Average Sentiment Score**, from redder for more **negative** language to greener for more **positive** language."
+      ]
+    },
+    {
+      "id": "theme-trends",
+      "title": "Theme Trends",
+      "kind": "line",
+      "data": [
+        {
+          "ticket_date": "2026-04-23",
+          "theme": "Delivery rescheduling",
+          "tickets": 7,
+          "daily_tickets": 100,
+          "share": 0.07
+        },
+        {
+          "ticket_date": "2026-04-23",
+          "theme": "Incorrect delivery procedure",
+          "tickets": 2,
+          "daily_tickets": 100,
+          "share": 0.02
+        },
+        {
+          "ticket_date": "2026-04-23",
+          "theme": "Meal replacement",
+          "tickets": 20,
+          "daily_tickets": 100,
+          "share": 0.2
+        },
+        {
+          "ticket_date": "2026-04-23",
+          "theme": "Order cancellation",
+          "tickets": 15,
+          "daily_tickets": 100,
+          "share": 0.15
+        },
+        {
+          "ticket_date": "2026-04-23",
+          "theme": "Price transparency",
+          "tickets": 1,
+          "daily_tickets": 100,
+          "share": 0.01
+        },
+        {
+          "ticket_date": "2026-04-23",
+          "theme": "Subscription cancellation",
+          "tickets": 10,
+          "daily_tickets": 100,
+          "share": 0.1
+        },
+        {
+          "ticket_date": "2026-04-24",
+          "theme": "Delivery rescheduling",
+          "tickets": 5,
+          "daily_tickets": 88,
+          "share": 0.056818181818181816
+        },
+        {
+          "ticket_date": "2026-04-24",
+          "theme": "Incorrect delivery procedure",
+          "tickets": 3,
+          "daily_tickets": 88,
+          "share": 0.03409090909090909
+        },
+        {
+          "ticket_date": "2026-04-24",
+          "theme": "Meal replacement",
+          "tickets": 16,
+          "daily_tickets": 88,
+          "share": 0.18181818181818182
+        },
+        {
+          "ticket_date": "2026-04-24",
+          "theme": "Order cancellation",
+          "tickets": 16,
+          "daily_tickets": 88,
+          "share": 0.18181818181818182
+        },
+        {
+          "ticket_date": "2026-04-24",
+          "theme": "Price transparency",
+          "tickets": 4,
+          "daily_tickets": 88,
+          "share": 0.045454545454545456
+        },
+        {
+          "ticket_date": "2026-04-24",
+          "theme": "Subscription cancellation",
+          "tickets": 3,
+          "daily_tickets": 88,
+          "share": 0.03409090909090909
+        },
+        {
+          "ticket_date": "2026-04-25",
+          "theme": "Delivery rescheduling",
+          "tickets": 1,
+          "daily_tickets": 78,
+          "share": 0.01282051282051282
+        },
+        {
+          "ticket_date": "2026-04-25",
+          "theme": "Incorrect delivery procedure",
+          "tickets": 1,
+          "daily_tickets": 78,
+          "share": 0.01282051282051282
+        },
+        {
+          "ticket_date": "2026-04-25",
+          "theme": "Meal replacement",
+          "tickets": 14,
+          "daily_tickets": 78,
+          "share": 0.1794871794871795
+        },
+        {
+          "ticket_date": "2026-04-25",
+          "theme": "Order cancellation",
+          "tickets": 16,
+          "daily_tickets": 78,
+          "share": 0.20512820512820512
+        },
+        {
+          "ticket_date": "2026-04-25",
+          "theme": "Price transparency",
+          "tickets": 3,
+          "daily_tickets": 78,
+          "share": 0.038461538461538464
+        },
+        {
+          "ticket_date": "2026-04-25",
+          "theme": "Subscription cancellation",
+          "tickets": 2,
+          "daily_tickets": 78,
+          "share": 0.02564102564102564
+        },
+        {
+          "ticket_date": "2026-04-26",
+          "theme": "Delivery rescheduling",
+          "tickets": 7,
+          "daily_tickets": 91,
+          "share": 0.07692307692307693
+        },
+        {
+          "ticket_date": "2026-04-26",
+          "theme": "Incorrect delivery procedure",
+          "tickets": 7,
+          "daily_tickets": 91,
+          "share": 0.07692307692307693
+        },
+        {
+          "ticket_date": "2026-04-26",
+          "theme": "Meal replacement",
+          "tickets": 15,
+          "daily_tickets": 91,
+          "share": 0.16483516483516483
+        },
+        {
+          "ticket_date": "2026-04-26",
+          "theme": "Order cancellation",
+          "tickets": 10,
+          "daily_tickets": 91,
+          "share": 0.10989010989010989
+        },
+        {
+          "ticket_date": "2026-04-26",
+          "theme": "Price transparency",
+          "tickets": 3,
+          "daily_tickets": 91,
+          "share": 0.03296703296703297
+        },
+        {
+          "ticket_date": "2026-04-26",
+          "theme": "Subscription cancellation",
+          "tickets": 5,
+          "daily_tickets": 91,
+          "share": 0.054945054945054944
+        },
+        {
+          "ticket_date": "2026-04-27",
+          "theme": "Delivery rescheduling",
+          "tickets": 5,
+          "daily_tickets": 101,
+          "share": 0.04950495049504951
+        },
+        {
+          "ticket_date": "2026-04-27",
+          "theme": "Incorrect delivery procedure",
+          "tickets": 7,
+          "daily_tickets": 101,
+          "share": 0.06930693069306931
+        },
+        {
+          "ticket_date": "2026-04-27",
+          "theme": "Meal replacement",
+          "tickets": 10,
+          "daily_tickets": 101,
+          "share": 0.09900990099009901
+        },
+        {
+          "ticket_date": "2026-04-27",
+          "theme": "Order cancellation",
+          "tickets": 12,
+          "daily_tickets": 101,
+          "share": 0.1188118811881188
+        },
+        {
+          "ticket_date": "2026-04-27",
+          "theme": "Price transparency",
+          "tickets": 5,
+          "daily_tickets": 101,
+          "share": 0.04950495049504951
+        },
+        {
+          "ticket_date": "2026-04-27",
+          "theme": "Subscription cancellation",
+          "tickets": 5,
+          "daily_tickets": 101,
+          "share": 0.04950495049504951
+        },
+        {
+          "ticket_date": "2026-04-28",
+          "theme": "Delivery rescheduling",
+          "tickets": 6,
+          "daily_tickets": 130,
+          "share": 0.046153846153846156
+        },
+        {
+          "ticket_date": "2026-04-28",
+          "theme": "Incorrect delivery procedure",
+          "tickets": 13,
+          "daily_tickets": 130,
+          "share": 0.1
+        },
+        {
+          "ticket_date": "2026-04-28",
+          "theme": "Meal replacement",
+          "tickets": 17,
+          "daily_tickets": 130,
+          "share": 0.13076923076923078
+        },
+        {
+          "ticket_date": "2026-04-28",
+          "theme": "Order cancellation",
+          "tickets": 10,
+          "daily_tickets": 130,
+          "share": 0.07692307692307693
+        },
+        {
+          "ticket_date": "2026-04-28",
+          "theme": "Price transparency",
+          "tickets": 3,
+          "daily_tickets": 130,
+          "share": 0.023076923076923078
+        },
+        {
+          "ticket_date": "2026-04-28",
+          "theme": "Subscription cancellation",
+          "tickets": 3,
+          "daily_tickets": 130,
+          "share": 0.023076923076923078
+        },
+        {
+          "ticket_date": "2026-04-29",
+          "theme": "Delivery rescheduling",
+          "tickets": 7,
+          "daily_tickets": 144,
+          "share": 0.04861111111111111
+        },
+        {
+          "ticket_date": "2026-04-29",
+          "theme": "Incorrect delivery procedure",
+          "tickets": 12,
+          "daily_tickets": 144,
+          "share": 0.08333333333333333
+        },
+        {
+          "ticket_date": "2026-04-29",
+          "theme": "Meal replacement",
+          "tickets": 24,
+          "daily_tickets": 144,
+          "share": 0.16666666666666666
+        },
+        {
+          "ticket_date": "2026-04-29",
+          "theme": "Order cancellation",
+          "tickets": 18,
+          "daily_tickets": 144,
+          "share": 0.125
+        },
+        {
+          "ticket_date": "2026-04-29",
+          "theme": "Price transparency",
+          "tickets": 4,
+          "daily_tickets": 144,
+          "share": 0.027777777777777776
+        },
+        {
+          "ticket_date": "2026-04-29",
+          "theme": "Subscription cancellation",
+          "tickets": 7,
+          "daily_tickets": 144,
+          "share": 0.04861111111111111
+        },
+        {
+          "ticket_date": "2026-04-30",
+          "theme": "Delivery rescheduling",
+          "tickets": 2,
+          "daily_tickets": 143,
+          "share": 0.013986013986013986
+        },
+        {
+          "ticket_date": "2026-04-30",
+          "theme": "Incorrect delivery procedure",
+          "tickets": 6,
+          "daily_tickets": 143,
+          "share": 0.04195804195804196
+        },
+        {
+          "ticket_date": "2026-04-30",
+          "theme": "Meal replacement",
+          "tickets": 26,
+          "daily_tickets": 143,
+          "share": 0.18181818181818182
+        },
+        {
+          "ticket_date": "2026-04-30",
+          "theme": "Order cancellation",
+          "tickets": 13,
+          "daily_tickets": 143,
+          "share": 0.09090909090909091
+        },
+        {
+          "ticket_date": "2026-04-30",
+          "theme": "Price transparency",
+          "tickets": 9,
+          "daily_tickets": 143,
+          "share": 0.06293706293706294
+        },
+        {
+          "ticket_date": "2026-04-30",
+          "theme": "Subscription cancellation",
+          "tickets": 14,
+          "daily_tickets": 143,
+          "share": 0.0979020979020979
+        },
+        {
+          "ticket_date": "2026-05-01",
+          "theme": "Delivery rescheduling",
+          "tickets": 2,
+          "daily_tickets": 97,
+          "share": 0.020618556701030927
+        },
+        {
+          "ticket_date": "2026-05-01",
+          "theme": "Incorrect delivery procedure",
+          "tickets": 2,
+          "daily_tickets": 97,
+          "share": 0.020618556701030927
+        },
+        {
+          "ticket_date": "2026-05-01",
+          "theme": "Meal replacement",
+          "tickets": 17,
+          "daily_tickets": 97,
+          "share": 0.17525773195876287
+        },
+        {
+          "ticket_date": "2026-05-01",
+          "theme": "Order cancellation",
+          "tickets": 15,
+          "daily_tickets": 97,
+          "share": 0.15463917525773196
+        },
+        {
+          "ticket_date": "2026-05-01",
+          "theme": "Price transparency",
+          "tickets": 5,
+          "daily_tickets": 97,
+          "share": 0.05154639175257732
+        },
+        {
+          "ticket_date": "2026-05-01",
+          "theme": "Subscription cancellation",
+          "tickets": 11,
+          "daily_tickets": 97,
+          "share": 0.1134020618556701
+        }
+      ],
+      "findings": [
+        "**Subscription cancellation, incorrect delivery procedure, and price transparency are becoming more prominent within the observed support contacts.** They are the strongest upward patterns in the period, making them sensible themes to watch in the next reporting window.",
+        "Order cancellation, delivery rescheduling, and meal replacement are becoming less prominent over the same period. This does not mean those themes are unimportant, particularly because meal replacement remains the largest overall theme.",
+        "The horizontal axis is **Ticket Date** and the vertical axis is **Theme Share**, the percentage of tickets on each date assigned to a theme. Each line is a **Theme**. The view covers nine dates, so it is a directional signal rather than a forecast."
+      ]
+    },
+    {
+      "id": "theme-churn",
+      "title": "Theme Churn",
+      "kind": "bubble",
+      "data": [
+        {
+          "theme": "Subscription cancellation",
+          "tickets": 50,
+          "churn_rate": 0.32,
+          "average_sentiment": -0.3383333333333334,
+          "label_theme": "Subscription cancellation"
+        },
+        {
+          "theme": "Order cancellation",
+          "tickets": 114,
+          "churn_rate": 0.17543859649122806,
+          "average_sentiment": -0.4057017543859649,
+          "label_theme": "Order cancellation"
+        },
+        {
+          "theme": "Meal replacement",
+          "tickets": 145,
+          "churn_rate": 0.13793103448275862,
+          "average_sentiment": -0.7750189082947704,
+          "label_theme": "Meal replacement"
+        },
+        {
+          "theme": "Delivery rescheduling",
+          "tickets": 40,
+          "churn_rate": 0.1,
+          "average_sentiment": -0.26107142857142857,
+          "label_theme": ""
+        },
+        {
+          "theme": "Payment processing",
+          "tickets": 83,
+          "churn_rate": 0.0963855421686747,
+          "average_sentiment": -0.6787591926146143,
+          "label_theme": ""
+        },
+        {
+          "theme": "Duplicate order",
+          "tickets": 25,
+          "churn_rate": 0.08,
+          "average_sentiment": -0.654,
+          "label_theme": ""
+        },
+        {
+          "theme": "Price transparency",
+          "tickets": 34,
+          "churn_rate": 0.058823529411764705,
+          "average_sentiment": -0.5474089635854341,
+          "label_theme": ""
+        },
+        {
+          "theme": "Meal damage",
+          "tickets": 55,
+          "churn_rate": 0.05454545454545454,
+          "average_sentiment": -0.8536363636363636,
+          "label_theme": ""
+        },
+        {
+          "theme": "Incorrect delivery procedure",
+          "tickets": 49,
+          "churn_rate": 0.04081632653061224,
+          "average_sentiment": -0.838095238095238,
+          "label_theme": ""
+        },
+        {
+          "theme": "Missing promotion",
+          "tickets": 57,
+          "churn_rate": 0.03508771929824561,
+          "average_sentiment": -0.7609649122807017,
+          "label_theme": ""
+        },
+        {
+          "theme": "Delivery status",
+          "tickets": 37,
+          "churn_rate": 0.02702702702702703,
+          "average_sentiment": -0.17567567567567569,
+          "label_theme": ""
+        },
+        {
+          "theme": "Missing meal",
+          "tickets": 44,
+          "churn_rate": 0.022727272727272728,
+          "average_sentiment": -0.4810606060606061,
+          "label_theme": ""
+        },
+        {
+          "theme": "Meal quality",
+          "tickets": 27,
+          "churn_rate": 0.0,
+          "average_sentiment": -0.8179012345679012,
+          "label_theme": ""
+        }
+      ],
+      "findings": [
+        "**Subscription cancellation has the highest observed churn rate among the larger themes, at 32.0% across 50 known outcomes.** Order cancellation follows at 17.5% across 114 outcomes and meal replacement at 13.8% across 145.",
+        "Subscription cancellation is not the most **negative** theme. This suggests that customers leaving may be driven by more than the tone of a single support conversation, and that the cancellation journey is worth examining in its own right.",
+        "Each bubble is a **Theme**. Its horizontal position is **Average Sentiment Score**, from minus one for fully **negative** language to one for fully **positive** language. Its vertical position is **Churn Rate**, the percentage of tickets linked to a customer leaving. Bubble size is the number of **Tickets** with a known churn outcome, and the dotted line marks the average sentiment across all tickets."
+      ]
+    },
+    {
+      "id": "resolution-time",
+      "title": "Resolution Time",
+      "kind": "bubble",
+      "data": [
+        {
+          "theme": "Missing meal",
+          "tickets": 45,
+          "median_resolution_hours": 5.9,
+          "average_sentiment": -0.4703703703703704,
+          "label_theme": "",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "Delivery rescheduling",
+          "tickets": 42,
+          "median_resolution_hours": 7.15,
+          "average_sentiment": -0.24863945578231292,
+          "label_theme": "",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "Incorrect delivery procedure",
+          "tickets": 53,
+          "median_resolution_hours": 7.3,
+          "average_sentiment": -0.8503144654088051,
+          "label_theme": "",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "Delivery status",
+          "tickets": 43,
+          "median_resolution_hours": 7.5,
+          "average_sentiment": -0.2054263565891473,
+          "label_theme": "",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "Order cancellation",
+          "tickets": 125,
+          "median_resolution_hours": 8.4,
+          "average_sentiment": -0.3826666666666667,
+          "label_theme": "",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "App usability",
+          "tickets": 20,
+          "median_resolution_hours": 8.7,
+          "average_sentiment": -0.8666666666666666,
+          "label_theme": "",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "Meal replacement",
+          "tickets": 158,
+          "median_resolution_hours": 8.850000000000001,
+          "average_sentiment": -0.7935300107768463,
+          "label_theme": "",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "Meal damage",
+          "tickets": 55,
+          "median_resolution_hours": 9.0,
+          "average_sentiment": -0.8536363636363636,
+          "label_theme": "",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "Payment processing",
+          "tickets": 90,
+          "median_resolution_hours": 9.6,
+          "average_sentiment": -0.6555964405964406,
+          "label_theme": "",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "Missing promotion",
+          "tickets": 63,
+          "median_resolution_hours": 9.7,
+          "average_sentiment": -0.7837301587301587,
+          "label_theme": "",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "Subscription cancellation",
+          "tickets": 60,
+          "median_resolution_hours": 10.1,
+          "average_sentiment": -0.3236111111111111,
+          "label_theme": "",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "Duplicate order",
+          "tickets": 30,
+          "median_resolution_hours": 11.2,
+          "average_sentiment": -0.645,
+          "label_theme": "",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "Price transparency",
+          "tickets": 36,
+          "median_resolution_hours": 11.8,
+          "average_sentiment": -0.5146825396825396,
+          "label_theme": "Price transparency",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "Meal quality",
+          "tickets": 28,
+          "median_resolution_hours": 12.149999999999999,
+          "average_sentiment": -0.8244047619047619,
+          "label_theme": "Meal quality",
+          "label_position": "middle left"
+        },
+        {
+          "theme": "Missed delivery",
+          "tickets": 20,
+          "median_resolution_hours": 12.35,
+          "average_sentiment": -0.6833333333333333,
+          "label_theme": "Missed delivery",
+          "label_position": "middle left"
+        }
+      ],
+      "findings": [
+        "**Missed delivery, meal quality, and price transparency take the longest to resolve, at 12.4, 12.2, and 11.8 hours respectively.** These are the themes where customers wait the longest for their support case to close.",
+        "Meal quality and missed delivery are both slow to resolve and strongly **negative** in customer messages. That combination makes them stronger candidates for an operational experience investigation than a slow theme with mostly neutral language.",
+        "Each point is a **Theme**. The horizontal position is **Median Resolution Hours**, the middle resolution time for that theme, so unusually long cases do not dominate the result. Point size is **Tickets** and colour is **Average Sentiment Score**, from redder for more **negative** language to greener for more **positive** language."
+      ]
+    },
+    {
+      "id": "repeat-contact",
+      "title": "Repeat Contact",
+      "kind": "bubble",
+      "data": [
+        {
+          "theme": "Meal damage",
+          "tickets": 55,
+          "average_customer_messages": 2.8363636363636364,
+          "average_reopens": 0.34545454545454546,
+          "negative_message_share": 0.8903030303030304,
+          "label_theme": "Meal damage"
+        },
+        {
+          "theme": "Duplicate order",
+          "tickets": 30,
+          "average_customer_messages": 2.8,
+          "average_reopens": 0.36666666666666664,
+          "negative_message_share": 0.6888888888888889,
+          "label_theme": "Duplicate order"
+        },
+        {
+          "theme": "Price transparency",
+          "tickets": 37,
+          "average_customer_messages": 2.7027027027027026,
+          "average_reopens": 0.5405405405405406,
+          "negative_message_share": 0.5512870012870014,
+          "label_theme": "Price transparency"
+        },
+        {
+          "theme": "Meal replacement",
+          "tickets": 159,
+          "average_customer_messages": 2.6289308176100628,
+          "average_reopens": 0.44654088050314467,
+          "negative_message_share": 0.8455173931589025,
+          "label_theme": "Meal replacement"
+        },
+        {
+          "theme": "Payment processing",
+          "tickets": 91,
+          "average_customer_messages": 2.5714285714285716,
+          "average_reopens": 0.46153846153846156,
+          "negative_message_share": 0.6677893535036392,
+          "label_theme": ""
+        },
+        {
+          "theme": "Missing promotion",
+          "tickets": 63,
+          "average_customer_messages": 2.5555555555555554,
+          "average_reopens": 0.5079365079365079,
+          "negative_message_share": 0.8226190476190477,
+          "label_theme": ""
+        },
+        {
+          "theme": "Missing meal",
+          "tickets": 45,
+          "average_customer_messages": 2.533333333333333,
+          "average_reopens": 0.06666666666666667,
+          "negative_message_share": 0.5092592592592593,
+          "label_theme": ""
+        },
+        {
+          "theme": "Delivery rescheduling",
+          "tickets": 42,
+          "average_customer_messages": 2.5238095238095237,
+          "average_reopens": 0.35714285714285715,
+          "negative_message_share": 0.29625850340136056,
+          "label_theme": ""
+        },
+        {
+          "theme": "Missed delivery",
+          "tickets": 20,
+          "average_customer_messages": 2.5,
+          "average_reopens": 0.45,
+          "negative_message_share": 0.71,
+          "label_theme": ""
+        },
+        {
+          "theme": "Delivery status",
+          "tickets": 43,
+          "average_customer_messages": 2.441860465116279,
+          "average_reopens": 0.5348837209302325,
+          "negative_message_share": 0.32170542635658916,
+          "label_theme": ""
+        },
+        {
+          "theme": "Meal quality",
+          "tickets": 28,
+          "average_customer_messages": 2.392857142857143,
+          "average_reopens": 0.5,
+          "negative_message_share": 0.8839285714285714,
+          "label_theme": ""
+        },
+        {
+          "theme": "Incorrect delivery procedure",
+          "tickets": 53,
+          "average_customer_messages": 2.358490566037736,
+          "average_reopens": 0.3018867924528302,
+          "negative_message_share": 0.8761006289308175,
+          "label_theme": ""
+        },
+        {
+          "theme": "App usability",
+          "tickets": 20,
+          "average_customer_messages": 2.35,
+          "average_reopens": 0.15,
+          "negative_message_share": 0.8666666666666666,
+          "label_theme": ""
+        },
+        {
+          "theme": "Subscription cancellation",
+          "tickets": 60,
+          "average_customer_messages": 2.35,
+          "average_reopens": 0.18333333333333332,
+          "negative_message_share": 0.34444444444444444,
+          "label_theme": ""
+        },
+        {
+          "theme": "Order cancellation",
+          "tickets": 125,
+          "average_customer_messages": 2.344,
+          "average_reopens": 0.36,
+          "negative_message_share": 0.4066666666666667,
+          "label_theme": ""
+        }
+      ],
+      "findings": [
+        "**Meal damage, duplicate order, price transparency, and meal replacement combine more back and forth with predominantly negative customer language.** These are the themes in the upper-right area of the chart.",
+        "Across the themes shown, more customer messages tend to coincide with a higher share of **negative** language. That makes the themes toward the upper right useful candidates for a closer look at the customer journey.",
+        "Each bubble is a **Theme**. The horizontal axis is **Average Customer Messages**, the average number of customer messages in a ticket. The vertical axis is **Negative Message Share**, the percentage of those messages labelled **negative**. Bubble size is **Tickets**."
+      ]
+    },
+    {
+      "id": "low-csat",
+      "title": "Low CSAT",
+      "kind": "bar",
+      "data": [
+        {
+          "theme": "Missing meal",
+          "rated_tickets": 10,
+          "low_csat_rate": 0.0,
+          "average_sentiment": -0.3
+        },
+        {
+          "theme": "Subscription cancellation",
+          "rated_tickets": 5,
+          "low_csat_rate": 0.0,
+          "average_sentiment": -0.18333333333333332
+        },
+        {
+          "theme": "Missing promotion",
+          "rated_tickets": 14,
+          "low_csat_rate": 0.07142857142857142,
+          "average_sentiment": -0.6160714285714286
+        },
+        {
+          "theme": "Delivery rescheduling",
+          "rated_tickets": 8,
+          "low_csat_rate": 0.125,
+          "average_sentiment": -0.020833333333333336
+        },
+        {
+          "theme": "Meal damage",
+          "rated_tickets": 8,
+          "low_csat_rate": 0.125,
+          "average_sentiment": -0.7791666666666667
+        },
+        {
+          "theme": "App usability",
+          "rated_tickets": 6,
+          "low_csat_rate": 0.16666666666666666,
+          "average_sentiment": -0.611111111111111
+        },
+        {
+          "theme": "Incorrect delivery procedure",
+          "rated_tickets": 9,
+          "low_csat_rate": 0.2222222222222222,
+          "average_sentiment": -0.8518518518518517
+        },
+        {
+          "theme": "Payment processing",
+          "rated_tickets": 13,
+          "low_csat_rate": 0.23076923076923078,
+          "average_sentiment": -0.6363636363636365
+        },
+        {
+          "theme": "Meal replacement",
+          "rated_tickets": 27,
+          "low_csat_rate": 0.25925925925925924,
+          "average_sentiment": -0.6897546897546897
+        },
+        {
+          "theme": "Order cancellation",
+          "rated_tickets": 11,
+          "low_csat_rate": 0.2727272727272727,
+          "average_sentiment": -0.20454545454545456
+        },
+        {
+          "theme": "Meal quality",
+          "rated_tickets": 7,
+          "low_csat_rate": 0.2857142857142857,
+          "average_sentiment": -0.4404761904761905
+        },
+        {
+          "theme": "Delivery status",
+          "rated_tickets": 8,
+          "low_csat_rate": 0.5,
+          "average_sentiment": -0.20833333333333334
+        }
+      ],
+      "findings": [
+        "**Delivery status has the highest low CSAT rate in the rated subset, at 50.0% across eight ratings.** This is a strong early warning, although the number of ratings is small.",
+        "**Meal quality**, **order cancellation**, **meal replacement**, and **payment processing** also show a meaningful share of low ratings. These themes are reasonable to monitor as more survey responses arrive.",
+        "Only **150 of 972 tickets** in the analytical sample have a **CSAT rating**, or **15.4%**. This limited coverage means a small number of additional ratings can materially change a theme's result, so the chart is an **early signal** rather than a reliable satisfaction ranking.",
+        "Each bar is a **Theme**. Bar length is **Low CSAT Rate**, the percentage of available CSAT ratings equal to one. The label is **Rated Tickets**, the number of responses behind that percentage."
+      ]
+    }
+  ]
+}

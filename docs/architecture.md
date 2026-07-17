@@ -139,7 +139,7 @@ The **Analysis notebook at `analysis/analysis.ipynb` loads the non-sensitive enr
 | Decision | Rationale |
 | --- | --- |
 | **Non-sensitive handoff** | Analysis starts from the final enriched-ticket artifact, which excludes raw customer-message text. |
-| **Aggregate-only presentation artifact** | One JSON file carries only the six curated chart datasets, labels, and findings into Presentation, so the dashboard never reads the enriched-ticket Parquet artifact. |
+| **Aggregate-only presentation artifact** | One JSON file carries only the six curated chart datasets, labels, and findings into Presentation, preserving the findings' selective Markdown emphasis while keeping the dashboard independent of the enriched-ticket Parquet artifact. |
 | **Theme and sentiment anchor every view** | The analysis deliberately avoids source-variable-only comparisons, because the purpose is to evaluate the enrichment outputs against customer outcomes. |
 | **Simple interactive EDA over complex modelling** | DataFrames, Plotly line charts, bubble charts, and bar charts make the evidence easy to inspect, explain, and reuse in the dashboard. |
 | **Source contact reasons are excluded** | `main_contact_reason` and `contact_reason` are noisy source-system labels that the message-derived `theme` is designed to supersede. |
@@ -148,7 +148,7 @@ The **Analysis notebook at `analysis/analysis.ipynb` loads the non-sensitive enr
 | **Dashboard-ready chart findings** | Each chart finding presents product-facing insights first, then ends with a plain-language explanation of only the measures and encodings visible in that chart. |
 | **Short visual names** | Plotly figure titles use at most five words, so the same names can label dashboard views without further translation. |
 | **Consistent interactive labels** | Every Plotly hover label uses bold, Title Case `Variable: Value` text and formats derived decimals and percentages to two digits. |
-| **Uncluttered bar charts** | Supporting counts remain available in hover labels when persistent text would obscure the visual. |
+| **Uncluttered bar charts** | Ticket amounts remain available in hover labels, rather than as persistent bar text, when labels would obscure the visual. |
 | **Selective theme labels on bubble charts** | Only themes named in the corresponding finding remain visible as labels. Churn and repeat-contact labels are centred in their bubbles, while resolution-time labels use manual placement and unclipped margins. Every bubble retains its theme name in the hover label. |
 
 ### Assumptions and Failure Modes
@@ -165,20 +165,22 @@ The **Analysis notebook at `analysis/analysis.ipynb` loads the non-sensitive enr
 
 ### System Overview
 
-The Presentation phase is a self-contained responsive Next.js application in `presentation/`. Its `app/page.tsx` route renders the interactive dashboard from `components/`, while `data/dashboard.ts` provides the typed boundary that later analysis artifacts replace. The displayed metrics, trends, themes, top signal, and written signal analysis all come from this shared source. Its phase README is the operational entry point for local setup and reproducible OpenAI and Vercel configuration.
+The Presentation phase is a self-contained responsive Next.js application in `presentation/`. Its `app/page.tsx` route renders the interactive dashboard from `components/`, while `data/dashboard.ts` provides the typed interface for the non-sensitive `data/dashboard.json` artifact exported by Analysis. The six interactive chart views and their written findings come from this shared source. Its phase README is the operational entry point for local setup and reproducible OpenAI and Vercel configuration.
 
-The overview includes workspace navigation, reporting-period controls, key outcome metrics, an SVG trend view, prioritized signals, searchable theme exploration, and a compact question-and-answer panel. Its current values are explicitly labeled as illustrative because the Analysis phase has not produced validated dashboard artifacts yet.
+The dashboard opens on a compact Overview with one salient result from each analysis view. Its selectable sidebar then presents Customer Themes, Theme Trends, Theme Churn, Resolution Time, Repeat Contact, and Low CSAT. Each analysis view places an interactive Plotly chart before its product-facing findings, and includes a compact question-and-answer panel.
 
 The assistant is encapsulated behind `POST /api/chat`. The route validates the latest browser-local user question, supplies an explicit allowlist of aggregate `dashboardData` fields to an OpenAI Responses model through Vercel AI SDK, and streams the answer to `components/chat-panel.tsx`. The API key and optional model override remain server-side environment variables.
 
 ### Data Flow
 
-1. The dashboard and server-side assistant import the same typed `dashboardData` artifact.
-2. Either Ask control opens the browser-local chat panel without navigating away from the overview.
-3. The panel sends its messages to `POST /api/chat` and displays `Thinking...` until response text begins streaming.
-4. The route accepts only the latest text-only user question, rejects malformed input, and limits the question to 500 characters. Client-supplied assistant history never reaches the model.
-5. The route combines the question with instructions and an allowlisted projection of aggregate metrics, chart series, themes, and written analysis, then allows up to 8,192 combined reasoning and answer tokens within a 60-second server execution window.
-6. OpenAI response storage is disabled, and the streamed answer remains only in the mounted browser session.
+1. Analysis exports one aggregate-only JSON artifact with the six chart datasets and findings to `presentation/data/dashboard.json`.
+2. The dashboard and server-side assistant import the same typed `dashboardData` interface over that artifact.
+3. Overview cards and sidebar controls select an analysis view, then render its matching Plotly chart and findings without changing the page route.
+4. The Ask control opens the browser-local chat panel without navigating away from the selected view.
+5. The panel sends its messages to `POST /api/chat` and displays `Thinking...` until response text begins streaming.
+6. The route accepts only the latest text-only user question, rejects malformed input, and limits the question to 500 characters. Client-supplied assistant history never reaches the model.
+7. The route combines the question with instructions and an allowlisted projection of the six chart datasets and written findings, then allows up to 8,192 combined reasoning and answer tokens within a 60-second server execution window.
+8. OpenAI response storage is disabled, and the streamed answer remains only in the mounted browser session.
 
 ### Design Decisions
 
@@ -187,10 +189,10 @@ The assistant is encapsulated behind `POST /api/chat`. The route validates the l
 | **Self-contained Presentation phase** | Framework configuration, dependencies, public assets, components, and data contracts share one phase-owned application root. |
 | **Phase-owned operational guide** | `presentation/README.md` keeps local commands, credential permissions, environment scopes, deployment settings, and public endpoint protection beside the application they operate. System-wide structure and rationale remain in this architecture record. |
 | **Vercel Presentation root** | The Vercel project uses `presentation` as its Root Directory for builds and deployments. |
-| **Typed local data boundary** | Placeholder values can be replaced with validated static artifacts or an API without changing the visual components. |
-| **One source for visuals and answers** | An explicit allowlist derives the assistant context from the same metrics, chart series, and analysis text that the dashboard renders, preventing drift without exposing unrelated future fields. |
-| **Dependency-light charting** | The initial trend chart uses accessible SVG markup and avoids committing to a visualization library before analytical requirements stabilize. |
-| **Explicit illustrative-data label** | Placeholder findings cannot be mistaken for results from the ticket analysis. |
+| **Typed local data interface** | `dashboard.ts` constrains the generated aggregate JSON artifact before it reaches the visual or assistant modules. |
+| **One source for visuals and answers** | An explicit allowlist derives the assistant context from the same chart datasets and findings that the dashboard renders, preventing drift without exposing unrelated future fields. |
+| **Plotly chart adapter** | A single client-side chart module renders all six Analysis view types using the existing CookUnity palette, so the dashboard can preserve interactive inspection without importing a notebook. |
+| **Aggregate-only static artifact** | The committed JSON contains only curated chart values and findings. It excludes raw tickets, message text, and the enriched-ticket Parquet artifact. |
 | **Direct OpenAI integration** | Vercel AI SDK handles browser chat state and response streaming, while the direct provider keeps a single inference dependency and server-held credential. |
 | **Generous response budget** | GPT-5 mini uses low reasoning effort, medium text verbosity, and an 8,192-token combined allowance so broad questions have ample reasoning headroom before emitting a useful answer. The route permits 60 seconds for cold starts and inference, while `OPENAI_MODEL` retains deployment-level override control. |
 | **Grounded conversational synthesis** | Broad questions receive a plain-language summary followed by connected explanations of the main metrics, strongest signal, and notable trend. Focused questions remain brief, while exact-value, no-invention, and scope guardrails apply to every answer. |
@@ -204,9 +206,9 @@ The assistant is encapsulated behind `POST /api/chat`. The route validates the l
 
 | Assumption or failure mode | Dashboard behaviour |
 | --- | --- |
-| **Analysis outputs are not available yet.** | Typed illustrative values exercise every primary dashboard surface. |
-| **The dashboard is viewed on different devices.** | Navigation collapses on small screens, metric cards reflow, and wide tabular content scrolls horizontally. |
-| **JavaScript is available.** | Search, theme selection, reporting-period selection, and mobile navigation use client-side state. |
+| **The dashboard artifact is unavailable or incompatible.** | The typed import fails during the production build instead of silently displaying stale illustrative values. |
+| **The dashboard is viewed on different devices.** | Navigation collapses on small screens, overview cards reflow, and Plotly charts resize responsively. |
+| **JavaScript is available.** | Overview-card selection, sidebar selection, mobile navigation, and the chat panel use client-side state. |
 | **A future artifact changes shape.** | The typed data boundary makes incompatible values fail during the production build. |
 | **`OPENAI_API_KEY` is absent.** | The chat endpoint returns `503`, and the panel reports that the assistant is unavailable while the dashboard remains usable. |
 | **The model or provider request fails.** | The streaming request ends in an inline error without affecting dashboard state. |

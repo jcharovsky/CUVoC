@@ -1,16 +1,17 @@
 # CUVoC Presentation
 
-The Presentation phase is a responsive Next.js dashboard for CookUnity Voice of Customer findings. It renders the curated metrics, trends, themes, and written analysis in `data/dashboard.ts`. The same allowlisted data grounds a small OpenAI-powered assistant, so its answers stay aligned with the visible dashboard.
+The Presentation phase is a responsive Next.js dashboard for CookUnity Voice of Customer findings. It opens with a compact overview, then renders six curated analysis views and their written findings from `data/dashboard.json`, through the typed interface in `data/dashboard.ts`. The same allowlisted data grounds a small OpenAI-powered assistant, so its answers stay aligned with the visible dashboard.
 
 ## Application structure
 
 - `app/` contains the dashboard page, styles, and `POST /api/chat` route.
-- `components/` contains the dashboard, chart, and chat interfaces.
-- `data/dashboard.ts` is the typed source for displayed and assistant-accessible findings.
+- `components/` contains the dashboard, Plotly chart, and chat interfaces.
+- `data/dashboard.json` is the non-sensitive aggregate artifact exported by Analysis.
+- `data/dashboard.ts` is the typed interface for displayed and assistant-accessible findings.
 - `lib/dashboard-assistant.ts` defines the assistant context, instructions, and request validation.
 - `public/` contains the CookUnity brand asset.
 
-The committed data is illustrative. Replace values in `data/dashboard.ts` only with curated aggregate outputs that are safe to display and send to OpenAI. Raw tickets and customer messages remain outside the Presentation phase and outside cloud inference requests.
+The committed data contains curated aggregate outputs that are safe to display and send to OpenAI. Raw tickets and customer messages remain outside the Presentation phase and outside cloud inference requests.
 
 ## Local setup
 
@@ -96,7 +97,7 @@ Monitor OpenAI project usage and Vercel function logs during public demonstratio
 
 ## Assistant behavior
 
-The assistant answers only from dashboard content. Broad questions receive a short conversational synthesis of the main metrics, strongest signal, and notable trend. Focused questions receive brief factual answers. Unsupported dashboard questions return an insufficient-data response, and unrelated questions return the fixed scope response.
+The assistant answers only from dashboard content. Broad questions receive a short conversational synthesis of the most relevant themes, outcomes, and trends. Focused questions receive brief factual answers. Unsupported dashboard questions return an insufficient-data response, and unrelated questions return the fixed scope response.
 
 Chat history exists only in browser memory. Closing the panel or reloading the page discards it. The server sends only the latest question to OpenAI and does not persist responses.
 
