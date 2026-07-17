@@ -7,7 +7,7 @@ CUVoC (CookUnity Voice of Customer) is an AI-native analysis pipeline that helps
 The pipeline has four phases:
 
 1. **Preparation:** ingest, profile, clean, and preserve viable source variables for reliable downstream use.
-2. **Enrichment:** turn customer-message text into structured issue, subissue, sentiment, and emotion signals with a validated hybrid pipeline.
+2. **Enrichment:** turn customer-message text into structured theme and sentiment signals with a validated local-model pipeline.
 3. **Analysis:** select relevant source and enriched variables, quantify trends, segments, and outcome associations, then prioritise evidence-backed findings.
 4. **Presentation:** communicate validated findings through a notebook and interactive dashboard, with a grounded assistant as an optional exploration aid.
 

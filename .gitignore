@@ -1,6 +1,8 @@
 .env
 preparation/data/
-enrichment/data/
+enrichment/data/prepared_tickets.parquet
+enrichment/data/prompt_development_template.csv
+enrichment/data/validation_template.csv
 /docs/planning.md
 .DS_Store
 __pycache__/

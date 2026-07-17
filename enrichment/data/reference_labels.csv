@@ -1,0 +1,45 @@
+template,label_index,theme,sentiment
+prompt_development,1,No actionable content,positive
+prompt_development,2,Missing promotion,positive
+prompt_development,3,Duplicate order,positive
+prompt_development,4,Missing promotion,negative
+prompt_development,5,Delivery status,neutral
+prompt_development,6,Missed delivery,neutral
+prompt_development,7,Meal replacement,positive
+prompt_development,8,Duplicate order,neutral
+prompt_development,9,Price transparency,neutral
+prompt_development,10,Order cancellation,neutral
+prompt_development,11,Missing meal,neutral
+prompt_development,12,Meal portion size,negative
+prompt_development,13,Meal availability,neutral
+prompt_development,14,Subscription cancellation,neutral
+prompt_development,15,Account location,neutral
+prompt_development,16,Incorrect delivery procedure,negative
+prompt_development,17,Subscription cancellation,neutral
+prompt_development,18,Allergen safety,negative
+prompt_development,19,Dietary preferences,neutral
+prompt_development,20,Subscription cancellation,neutral
+prompt_development,21,Delivery tracking,neutral
+prompt_development,22,Dietary preferences,neutral
+prompt_development,23,Meal replacement,negative
+validation,1,Price increase,negative
+validation,2,No actionable content,neutral
+validation,3,Missing order item,neutral
+validation,4,Incorrect delivery location,positive
+validation,5,Ordering interface,negative
+validation,6,Incorrect delivery location,negative
+validation,7,Incorrect delivery location,negative
+validation,8,Meal quality,neutral
+validation,9,Dietary preferences,neutral
+validation,10,Meal quality,positive
+validation,11,Meal quality,negative
+validation,12,Charge after cancellation,negative
+validation,13,Incorrect delivery location,negative
+validation,14,Account access,negative
+validation,15,Dietary preferences,neutral
+validation,16,Missing promotion,neutral
+validation,17,Meal packaging,negative
+validation,18,Subscription cancellation,negative
+validation,19,Order cancellation,negative
+validation,20,Delivery status,positive
+validation,21,No actionable content,neutral

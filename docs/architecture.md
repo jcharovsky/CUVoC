@@ -57,11 +57,13 @@ CUVoC contains a **local batch ingestion pipeline**. `preparation/modules/ingest
 
 ### System Overview
 
-The **Enrichment notebook at `enrichment/enrichment.ipynb` imports the prepared Parquet dataset** from its local `data/` directory. Qwen3 8B is installed locally through Ollama as `qwen3:8b`; no ticket text has yet been sent to the model.
+The **Enrichment notebook at `enrichment/enrichment.ipynb` imports the prepared Parquet dataset** from its local `data/` directory. Qwen3 8B is installed locally through Ollama as `qwen3:8b`. No ticket text has yet been sent to the model.
 
 ### Model Selection
 
 **Qwen3 8B is the selected model for local ticket classification.** Its 5.2 GB Q4 quantization leaves practical headroom on the M1 Pro with 16 GB unified memory, while Ollama uses Apple Metal acceleration for inference.
+
+A sentiment-only fine-tune would not address the equally important task of theme identification. **A useful specialist would require training on the project's ticket domain and theme taxonomy**, and no suitable documented industry-specific model was identified. Qwen3 is instead contextualized with the controlled taxonomy and manually labelled examples.
 
 Ollama is the **local model runtime**. The model weights are downloaded with `ollama pull qwen3:8b`, while ticket text is supplied only to the local runtime. The [official Ollama documentation](https://docs.ollama.com/) covers installation and runtime configuration.
 
@@ -71,6 +73,18 @@ Ollama is the **local model runtime**. The model weights are downloaded with `ol
 
 The source does not provide message-level timestamps. Later enrichment therefore preserves source-array order as message position, without treating that position as a chronological timestamp.
 
+### Taxonomy Design
+
+**Taxonomy design begins with a deterministic, balanced review sample.** It selects two tickets from each of the 15 observed `main_contact_reason` values and splits them into disjoint prompt-development and held-out validation sets. Each local CSV contains one row per unique normalized message, a stable message key, a duplicate-occurrence count, and blank `theme` and `sentiment` fields. Sentiment is selected as `positive`, `negative`, or `neutral`. The prompt-development labels define controlled themes and examples for the classifier prompt. The held-out labels provide the independent reference used to evaluate its output. **The validation template excludes `ticket_6MKG5_wc6_5GPaN0Kn` because it is predominantly quoted staff correspondence.** The resulting 23-message prompt-development and 21-message validation samples are sufficient for the demonstration. A production system would require substantially larger, stratified samples to represent themes and sentiments reliably.
+
+**Template imports detect the CSV delimiter automatically.** This preserves manual edits made in spreadsheet software that exports semicolon-delimited files.
+
+**Templates are generated locally before reviewed labels are applied.** The non-sensitive `reference_labels.csv` records only the 23 prompt-development and 21 validation labels. It applies them to templates sorted by their local message keys, with count and sequence validation before the local CSVs are written. The resulting label-application profile verifies complete coverage. This recreates labelled local templates without committing sensitive message text.
+
+**A production-grade system would define its exact theme categories and positive, negative, and neutral criteria with Marketing, CX, or Product teams.** Their input would align the labels with the decisions the organisation needs to make.
+
+Source-system labels balance sample coverage but are excluded from the manual-review rows. This prevents the review process from reproducing the known noisy source taxonomy instead of deriving themes from message text.
+
 ### Assumptions and Failure Modes
 
 | Assumption or failure mode | Pipeline behaviour |
@@ -79,6 +93,7 @@ The source does not provide message-level timestamps. Later enrichment therefore
 | **The Ollama service is available locally.** | Model calls cannot begin until the local runtime and `qwen3:8b` model are available. |
 | **Local inference protects ticket text.** | The classifier must call only the local Ollama endpoint, never a cloud inference provider. |
 | **Message collections align with source counts.** | Profiling validates each sequence against `customer_message_count` before any model labels are added. |
+| **Source labels are suitable as ground truth.** | They are used only to balance the review sample. Manual labels are based on message text and context. |
 
 ## Next Steps
 
