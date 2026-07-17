@@ -84,7 +84,7 @@ The source does not provide message-level timestamps. Later enrichment therefore
 
 ### System Overview
 
-The Presentation phase is a self-contained responsive Next.js application in `presentation/`. Its `app/page.tsx` route renders the interactive dashboard from `components/`, while `data/dashboard.ts` provides the typed boundary that later analysis artifacts replace. The displayed metrics, trends, themes, top signal, and written signal analysis all come from this shared source.
+The Presentation phase is a self-contained responsive Next.js application in `presentation/`. Its `app/page.tsx` route renders the interactive dashboard from `components/`, while `data/dashboard.ts` provides the typed boundary that later analysis artifacts replace. The displayed metrics, trends, themes, top signal, and written signal analysis all come from this shared source. Its phase README is the operational entry point for local setup and reproducible OpenAI and Vercel configuration.
 
 The overview includes workspace navigation, reporting-period controls, key outcome metrics, an SVG trend view, prioritized signals, searchable theme exploration, and a compact question-and-answer panel. Its current values are explicitly labeled as illustrative because the Analysis phase has not produced validated dashboard artifacts yet.
 
@@ -104,6 +104,7 @@ The assistant is encapsulated behind `POST /api/chat`. The route validates the l
 | Decision | Rationale |
 | --- | --- |
 | **Self-contained Presentation phase** | Framework configuration, dependencies, public assets, components, and data contracts share one phase-owned application root. |
+| **Phase-owned operational guide** | `presentation/README.md` keeps local commands, credential permissions, environment scopes, deployment settings, and public endpoint protection beside the application they operate. System-wide structure and rationale remain in this architecture record. |
 | **Vercel Presentation root** | The Vercel project uses `presentation` as its Root Directory for builds and deployments. |
 | **Typed local data boundary** | Placeholder values can be replaced with validated static artifacts or an API without changing the visual components. |
 | **One source for visuals and answers** | An explicit allowlist derives the assistant context from the same metrics, chart series, and analysis text that the dashboard renders, preventing drift without exposing unrelated future fields. |
