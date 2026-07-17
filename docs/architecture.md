@@ -124,27 +124,40 @@ Source-system labels balance sample coverage but are excluded from the manual-re
 
 ### System Overview
 
-The **Analysis notebook at `analysis/analysis.ipynb` loads the non-sensitive enriched-ticket handoff**. It uses the 100-ticket development artifact while the final 1,000-ticket artifact is unavailable, then automatically prefers the final artifact once Enrichment creates it.
+The **Analysis notebook at `analysis/analysis.ipynb` loads the non-sensitive enriched-ticket handoff**. It selects a small set of source outcomes, derives ticket-level sentiment measures, and uses simple exploratory views to relate enriched theme or sentiment to time, churn, resolution, repeated contact, and CSAT.
 
 ### Data Flow
 
-1. It checks `analysis/data/enriched_tickets.parquet` first.
-2. It falls back to `analysis/data/pilot_100_enriched_tickets.parquet` for development.
-3. It loads the selected artifact, displays its source, ticket count, field count, and theme count, then presents the unfiltered ticket table.
+1. It loads `analysis/data/enriched_tickets.parquet`, then displays its source, ticket count, field count, and theme count before presenting the unfiltered ticket table.
+2. It retains `ticket_date`, `has_churn`, `resolution_hours`, `customer_message_count`, `reopen_count`, `csat`, and `response_csat` for the initial analysis.
+3. It derives an average ticket sentiment score and negative-message share from each ticket's sentiment list.
+4. It profiles theme volume and sentiment, theme share over time, churn, resolution time, repeat contact, and the rated CSAT subset.
 
 ### Design Decisions
 
 | Decision | Rationale |
 | --- | --- |
-| **Single analytical seam** | Development code uses the same non-sensitive ticket schema as the final handoff. |
-| **Final artifact preference** | The full enriched dataset replaces the development sample without changing notebook code. |
+| **Non-sensitive handoff** | Analysis starts from the final enriched-ticket artifact, which excludes raw customer-message text. |
+| **Theme and sentiment anchor every view** | The analysis deliberately avoids source-variable-only comparisons, because the purpose is to evaluate the enrichment outputs against customer outcomes. |
+| **Simple interactive EDA over complex modelling** | DataFrames, Plotly line charts, bubble charts, and bar charts make the evidence easy to inspect, explain, and reuse in the dashboard. |
+| **Source contact reasons are excluded** | `main_contact_reason` and `contact_reason` are noisy source-system labels that the message-derived `theme` is designed to supersede. |
+| **No actionable content is excluded** | This non-issue theme is removed once from the analytical frame, so every visual and displayed calculation uses the same customer-issue population. |
+| **Small-group thresholds** | Theme views use at least 20 tickets, while exploratory CSAT views use at least five ratings and visibly retain their sample counts. |
+| **Dashboard-ready chart findings** | Each chart finding presents product-facing insights first, then ends with a plain-language explanation of only the measures and encodings visible in that chart. |
+| **Short visual names** | Plotly figure titles use at most five words, so the same names can label dashboard views without further translation. |
+| **Consistent interactive labels** | Every Plotly hover label uses bold, Title Case `Variable: Value` text and formats derived decimals and percentages to two digits. |
+| **Uncluttered bar charts** | Supporting counts remain available in hover labels when persistent text would obscure the visual. |
+| **Selective theme labels on bubble charts** | Only themes named in the corresponding finding remain visible as labels. Churn and repeat-contact labels are centred in their bubbles, while resolution-time labels use manual placement and unclipped margins. Every bubble retains its theme name in the hover label. |
 
 ### Assumptions and Failure Modes
 
 | Assumption or failure mode | Pipeline behaviour |
 | --- | --- |
-| **An enriched artifact exists.** | Loading stops with a clear instruction to complete Enrichment when neither artifact is available. |
-| **Development results are representative.** | The 100-ticket artifact supports code and visualisation development only, not final analytical claims. |
+| **The enriched artifact exists.** | Loading stops with a clear instruction to complete Enrichment when the handoff is unavailable. |
+| **The 1,000-ticket sample supports production conclusions.** | It supports a demonstration of the method only. The charts are exploratory and do not claim statistical generalisation to the full population. |
+| **CSAT represents the full support population.** | Only 150 of the 972 analytical tickets are rated. The CSAT view is an early signal, not a reliable ranking, and missing survey responses are not satisfaction scores. |
+| **Short-window changes are durable trends.** | Theme-share lines cover nine observed dates and are treated as directional signals for follow-up. |
+| **Theme or sentiment causes an outcome.** | Outcome charts describe associations only. They do not make causal claims. |
 
 ## Next Steps
 
