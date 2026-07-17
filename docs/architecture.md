@@ -132,12 +132,14 @@ The **Analysis notebook at `analysis/analysis.ipynb` loads the non-sensitive enr
 2. It retains `ticket_date`, `has_churn`, `resolution_hours`, `customer_message_count`, `reopen_count`, `csat`, and `response_csat` for the initial analysis.
 3. It derives an average ticket sentiment score and negative-message share from each ticket's sentiment list.
 4. It profiles theme volume and sentiment, theme share over time, churn, resolution time, repeat contact, and the rated CSAT subset.
+5. It exports the six chart datasets and their product-facing findings to the non-sensitive `presentation/data/dashboard.json` artifact.
 
 ### Design Decisions
 
 | Decision | Rationale |
 | --- | --- |
 | **Non-sensitive handoff** | Analysis starts from the final enriched-ticket artifact, which excludes raw customer-message text. |
+| **Aggregate-only presentation artifact** | One JSON file carries only the six curated chart datasets, labels, and findings into Presentation, so the dashboard never reads the enriched-ticket Parquet artifact. |
 | **Theme and sentiment anchor every view** | The analysis deliberately avoids source-variable-only comparisons, because the purpose is to evaluate the enrichment outputs against customer outcomes. |
 | **Simple interactive EDA over complex modelling** | DataFrames, Plotly line charts, bubble charts, and bar charts make the evidence easy to inspect, explain, and reuse in the dashboard. |
 | **Source contact reasons are excluded** | `main_contact_reason` and `contact_reason` are noisy source-system labels that the message-derived `theme` is designed to supersede. |
