@@ -1,0 +1,1 @@
+export const MAX_CHAT_QUESTION_LENGTH = 500;
