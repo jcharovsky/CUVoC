@@ -42,7 +42,7 @@ export async function POST(request: Request) {
       openai: {
         store: false,
         reasoningEffort: "low",
-        textVerbosity: "low",
+        textVerbosity: "medium",
       } satisfies OpenAILanguageModelResponsesOptions,
     },
   });
