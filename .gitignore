@@ -6,7 +6,6 @@ enrichment/data/prompt_development_template.csv
 enrichment/data/validation_template.csv
 enrichment/data/classification_checkpoint.json
 enrichment/data/classification_predictions.parquet
-/docs/planning.md
 .DS_Store
 __pycache__/
 .venv/
