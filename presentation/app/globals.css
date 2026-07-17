@@ -164,7 +164,7 @@ h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(29px, 3vw,
 .chat-empty { align-items: center; color: #899594; display: flex; flex: 1; flex-direction: column; justify-content: center; }
 .chat-empty svg { color: var(--violet); }
 .chat-empty p { font-size: 11px; margin: 8px 0 0; }
-.chat-message { border-radius: 11px; font-size: 12px; line-height: 1.5; max-width: 88%; padding: 10px 12px; white-space: pre-wrap; }
+.chat-message { border-radius: 11px; font-size: 13px; line-height: 1.5; max-width: 88%; padding: 10px 12px; white-space: pre-wrap; }
 .chat-message.user { align-self: flex-end; background: var(--ink); color: var(--white); }
 .chat-message.assistant { align-self: flex-start; background: var(--yellow-soft); border: 1px solid #f3dfaa; }
 .chat-thinking { align-self: flex-start; color: var(--muted); font-size: 11px; padding: 5px 2px; }
