@@ -81,6 +81,12 @@ The source does not provide message-level timestamps. Later enrichment therefore
 
 **Templates are generated locally before reviewed labels are applied.** The non-sensitive `reference_labels.csv` records only the 23 prompt-development and 21 validation labels. It applies them to templates sorted by their local message keys, with count and sequence validation before the local CSVs are written. The resulting label-application profile verifies complete coverage. This recreates labelled local templates without committing sensitive message text.
 
+### Sampling
+
+**Sampling creates a reproducible 1,000-ticket demonstration subset for local enrichment.** It excludes the 29 tickets used for manual prompt development and held-out validation, leaving a 9,971-ticket eligible pool, then allocates tickets proportionally across observed `main_contact_reason` values with a fixed seed. This keeps reviewed examples out of the model workload. The process preserves the full source dataset locally, writes the selected tickets to the ignored `enrichment/data/enrichment_sample.parquet` artifact, then reloads that artifact as the Classification input.
+
+The sample profile compares source and sample counts by source label and ticket date. **This demonstrates coverage without claiming that the subset supports production-grade estimates for rare themes or outcome associations.**
+
 **A production-grade system would define its exact theme categories and positive, negative, and neutral criteria with Marketing, CX, or Product teams.** Their input would align the labels with the decisions the organisation needs to make.
 
 Source-system labels balance sample coverage but are excluded from the manual-review rows. This prevents the review process from reproducing the known noisy source taxonomy instead of deriving themes from message text.

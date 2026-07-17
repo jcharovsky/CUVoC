@@ -1,6 +1,7 @@
 .env
 preparation/data/
 enrichment/data/prepared_tickets.parquet
+enrichment/data/enrichment_sample.parquet
 enrichment/data/prompt_development_template.csv
 enrichment/data/validation_template.csv
 /docs/planning.md
