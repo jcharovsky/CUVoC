@@ -41,12 +41,41 @@ def _write_checkpoint(path: Path, checkpoint: dict[str, Any]) -> None:
     os.replace(temporary_path, path)
 
 
-def _load_checkpoint(path: Path, model: str, initial_taxonomy: list[str]) -> dict[str, Any]:
+def _run_fingerprint(
+    workload: list[dict[str, Any]],
+    examples: list[dict[str, str]],
+    initial_taxonomy: list[str],
+    model: str,
+) -> str:
+    """Fingerprint the inputs that determine reproducible model predictions."""
+    payload = {
+        "model": model,
+        "workload": [
+            {
+                "message_key": record["message_key"],
+                "requires_theme": record["requires_theme"],
+            }
+            for record in workload
+        ],
+        "examples": examples,
+        "initial_taxonomy": initial_taxonomy,
+    }
+    serialized_payload = json.dumps(payload, ensure_ascii=False, sort_keys=True)
+    return hashlib.sha256(serialized_payload.encode("utf-8")).hexdigest()
+
+
+def _load_checkpoint(
+    path: Path,
+    model: str,
+    initial_taxonomy: list[str],
+    run_fingerprint: str,
+) -> dict[str, Any]:
     """Load compatible local progress or initialize a new classification state."""
     if not path.is_file():
         return {
             "version": CHECKPOINT_VERSION,
             "model": model,
+            "run_fingerprint": run_fingerprint,
             "taxonomy": initial_taxonomy.copy(),
             "predictions": {},
         }
@@ -60,6 +89,10 @@ def _load_checkpoint(path: Path, model: str, initial_taxonomy: list[str]) -> dic
         raise RuntimeError("Classification checkpoint has an unsupported version.")
     if checkpoint.get("model") != model:
         raise RuntimeError("Classification checkpoint was created with another model.")
+    if checkpoint.get("run_fingerprint") != run_fingerprint:
+        raise RuntimeError(
+            "Classification inputs changed. Delete the existing checkpoint before rerunning."
+        )
     if not isinstance(checkpoint.get("taxonomy"), list) or not isinstance(
         checkpoint.get("predictions"), dict
     ):
@@ -134,13 +167,20 @@ def classify_workload(
     if checkpoint_every < 1:
         raise ValueError("checkpoint_every must be at least one.")
 
-    rendered_examples = _format_examples(examples)
-    checkpoint = _load_checkpoint(checkpoint_path, model, initial_taxonomy)
+    workload_records = list(workload)
+    example_records = list(examples)
+    run_fingerprint = _run_fingerprint(
+        workload_records, example_records, initial_taxonomy, model
+    )
+    rendered_examples = _format_examples(example_records)
+    checkpoint = _load_checkpoint(
+        checkpoint_path, model, initial_taxonomy, run_fingerprint
+    )
     taxonomy = checkpoint["taxonomy"]
     predictions = checkpoint["predictions"]
     completed_since_checkpoint = 0
 
-    for record in workload:
+    for record in workload_records:
         key = record["message_key"]
         if key in predictions:
             continue

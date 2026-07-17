@@ -71,13 +71,15 @@ Ollama is the **local model runtime**. The benchmark checks model availability, 
 
 ### Classification
 
-**Classification preserves the 1,000 sampled tickets while reducing duplicate local inference.** `enrichment/modules/classifier.py` normalizes whitespace and letter case, creates a stable hash key for each message, and processes each of the 1,412 unique messages once. Repeated messages remain in the reconstructed sample because repeated customer contact can carry relevant CX meaning, even though it does not require repeated LLM inference. A unique message that appears first in any ticket receives both a ticket theme and a message sentiment. All other unique messages receive sentiment only.
+**Classification preserves the 1,000 sampled tickets while reducing duplicate local inference.** It reads message arrays directly from the sampled Parquet artifact, avoiding any dependency on a source DataFrame index that is not preserved by the export. `enrichment/modules/classifier.py` normalizes whitespace and letter case, creates a stable hash key for each message, and processes each of the 1,501 unique messages once. Repeated messages remain in the reconstructed sample because repeated customer contact can carry relevant CX meaning, even though it does not require repeated LLM inference. A unique message that appears first in any ticket receives both a ticket theme and a message sentiment. All other unique messages receive sentiment only.
+
+**The 1,000-ticket demonstration sample validates the pipeline, not production-grade analysis.** The available personal hardware cannot process the full 10,000-ticket dataset locally within the available time, and no secure server is available for this work. The same local-inference pipeline could process larger samples faster with access to that infrastructure.
 
 The classifier uses the 23 manually labelled prompt-development messages as **few-shot examples**. It never includes the 21 held-out validation messages or noisy source contact labels in the prompt. Theme prompts begin with the manually reviewed categories, prefer an existing concise category, and may introduce a new one only when necessary. New themes are appended to the candidate taxonomy for each subsequent deterministically ordered workload row. This retains the long tail for later manual grouping rather than collapsing it prematurely into an `other` value.
 
-Each local Ollama request uses schema-constrained JSON, temperature zero, disabled reasoning, and a 15-minute model keep-alive. The classifier atomically writes an ignored JSON checkpoint every 10 completed messages. A rerun resumes compatible progress and repeats at most nine completed calls after an interruption. It stops on an incompatible checkpoint, unavailable local runtime, invalid JSON, invalid sentiment, or empty theme.
+Each local Ollama request uses schema-constrained JSON, temperature zero, disabled reasoning, and a 15-minute model keep-alive. The classifier fingerprints the model, workload, examples, and initial taxonomy, then atomically writes an ignored JSON checkpoint every 10 completed messages. A rerun resumes compatible progress and repeats at most nine completed calls after an interruption. Changed inputs stop the run until its old checkpoint is removed, preventing stale predictions from being reused.
 
-After classification, the notebook maps each sentiment to all original duplicate occurrences and maps the first-message theme to each ticket. It validates complete coverage and sentiment-list lengths against `customer_message_count`, then removes `customer_messages` from the final handoff. The local `classification_predictions.parquet` artifact remains ignored, while the non-sensitive `analysis/data/enriched_tickets.parquet` artifact is the input for Analysis.
+After classification, the notebook maps each sentiment to all original duplicate occurrences and maps the first-message theme to each ticket. It validates complete coverage and sentiment-list lengths against `customer_message_count`, then removes `customer_messages` from the final handoff. The local checkpoint and prediction artifacts remain ignored. The non-sensitive `analysis/data/enriched_tickets.parquet` artifact is the input for Analysis.
 
 ### Text Profiling
 
@@ -114,6 +116,7 @@ Source-system labels balance sample coverage but are excluded from the manual-re
 | **The classifier can return controlled output.** | Invalid JSON, sentiment values, or empty themes stop classification instead of entering the enriched dataset. |
 | **An evolving taxonomy remains analytically usable.** | The raw long tail is preserved, then later Analysis manually maps it to broader categories if needed. |
 | **An overnight run can be interrupted.** | Atomic checkpoints resume compatible work and repeat at most nine completed messages. |
+| **The prompt or taxonomy can change between runs.** | A configuration fingerprint rejects incompatible checkpoints, so stale predictions cannot enter the next run. |
 | **Message collections align with source counts.** | Profiling validates each sequence against `customer_message_count` before any model labels are added. |
 | **Source labels are suitable as ground truth.** | They are used only to balance the review sample. Manual labels are based on message text and context. |
 
