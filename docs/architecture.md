@@ -61,7 +61,7 @@ The **Enrichment notebook at `enrichment/enrichment.ipynb` imports the prepared 
 
 ### Model Benchmark and Selection
 
-**Qwen3 8B is selected for local ticket classification.** Qwen3 4B and 8B were compared on the 21-message held-out validation template, using the 23 labelled prompt-development messages as in-context examples. Both produced valid schema-constrained JSON for every message. Qwen3 8B achieved 81.0% sentiment agreement with manual labels, compared with 61.9% for Qwen3 4B, while taking 2.19 rather than 1.46 mean seconds per message. Its 28.6% exact-theme agreement modestly exceeded Qwen3 4B's 23.8%, although free-form theme wording makes exact matching a limited quality measure.
+**Qwen3 8B is selected for local ticket classification.** Qwen3 4B and 8B were compared on the 21-message held-out validation template, using the 23 labelled prompt-development messages as in-context examples. Both produced valid schema-constrained JSON for every message. Qwen3 8B achieved 81.0% sentiment agreement with manual labels, compared with 61.9% for Qwen3 4B, while taking 2.26 rather than 1.46 mean seconds per message. Its 28.6% exact-theme agreement modestly exceeded Qwen3 4B's 23.8%, although free-form theme wording makes exact matching a limited quality measure.
 
 **This benchmark is sufficient for the demonstration, not for a production-quality claim.** The available personal hardware cannot run frontier open-weight models such as Qwen3-235B-A22B or Llama 4 Maverick locally, and no secure server is available for this work. The same local-inference pipeline and methodology are expected to produce satisfactory production results with access to that infrastructure.
 
@@ -119,6 +119,32 @@ Source-system labels balance sample coverage but are excluded from the manual-re
 | **The prompt or taxonomy can change between runs.** | A configuration fingerprint rejects incompatible checkpoints, so stale predictions cannot enter the next run. |
 | **Message collections align with source counts.** | Profiling validates each sequence against `customer_message_count` before any model labels are added. |
 | **Source labels are suitable as ground truth.** | They are used only to balance the review sample. Manual labels are based on message text and context. |
+
+## Analysis
+
+### System Overview
+
+The **Analysis notebook at `analysis/analysis.ipynb` loads the non-sensitive enriched-ticket handoff**. It uses the 100-ticket development artifact while the final 1,000-ticket artifact is unavailable, then automatically prefers the final artifact once Enrichment creates it.
+
+### Data Flow
+
+1. It checks `analysis/data/enriched_tickets.parquet` first.
+2. It falls back to `analysis/data/pilot_100_enriched_tickets.parquet` for development.
+3. It loads the selected artifact, displays its source, ticket count, field count, and theme count, then presents the unfiltered ticket table.
+
+### Design Decisions
+
+| Decision | Rationale |
+| --- | --- |
+| **Single analytical seam** | Development code uses the same non-sensitive ticket schema as the final handoff. |
+| **Final artifact preference** | The full enriched dataset replaces the development sample without changing notebook code. |
+
+### Assumptions and Failure Modes
+
+| Assumption or failure mode | Pipeline behaviour |
+| --- | --- |
+| **An enriched artifact exists.** | Loading stops with a clear instruction to complete Enrichment when neither artifact is available. |
+| **Development results are representative.** | The 100-ticket artifact supports code and visualisation development only, not final analytical claims. |
 
 ## Next Steps
 
