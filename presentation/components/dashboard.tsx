@@ -5,7 +5,6 @@ import Image from "next/image";
 import {
   ArrowDownRight,
   ArrowUpRight,
-  Bell,
   ChevronDown,
   CircleHelp,
   Clock3,
@@ -13,7 +12,6 @@ import {
   Menu,
   MessageSquareText,
   Search,
-  SlidersHorizontal,
   Sparkles,
   Target,
   TrendingUp,
@@ -83,14 +81,7 @@ export function Dashboard() {
           {navigation.map(({ label, icon: Icon }, index) => (
             <button className={`nav-item ${index === 0 ? "active" : ""}`} key={label} type="button"><Icon size={18} />{label}</button>
           ))}
-          <p className="nav-label secondary">Tools</p>
-          <button className="nav-item" type="button" onClick={() => { setChatOpen(true); setSidebarOpen(false); }}><Sparkles size={18} />Ask CUVoC<span className="beta">AI</span></button>
-          <button className="nav-item" type="button"><SlidersHorizontal size={18} />Data quality</button>
         </nav>
-        <div className="sidebar-foot">
-          <div className="coverage"><span className="status-dot" /><div><strong>Data is current</strong><small>{dashboardData.coverage}</small></div></div>
-          <div className="profile"><span className="avatar">JC</span><div><strong>Juan Charovsky</strong><small>Analysis workspace</small></div><ChevronDown size={16} /></div>
-        </div>
       </aside>
 
       {sidebarOpen && <button className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} aria-label="Close navigation" />}
@@ -100,8 +91,7 @@ export function Dashboard() {
           <button className="menu-button" onClick={() => setSidebarOpen(true)} aria-label="Open navigation"><Menu /></button>
           <div className="breadcrumbs"><span>Voice of Customer</span><b>/</b><strong>Overview</strong></div>
           <div className="topbar-actions">
-            <button className="icon-button" aria-label="Notifications"><Bell size={19} /><i /></button>
-            <button className="ask-button" type="button" onClick={() => setChatOpen(true)}><Sparkles size={16} />Ask about the data</button>
+            <button className="ask-button" type="button" onClick={() => setChatOpen(true)}><Sparkles size={16} />Ask CUVoC</button>
           </div>
         </header>
 
