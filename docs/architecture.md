@@ -57,15 +57,17 @@ CUVoC contains a **local batch ingestion pipeline**. `preparation/modules/ingest
 
 ### System Overview
 
-The **Enrichment notebook at `enrichment/enrichment.ipynb` imports the prepared Parquet dataset** from its local `data/` directory. Qwen3 8B is installed locally through Ollama as `qwen3:8b`. No ticket text has yet been sent to the model.
+The **Enrichment notebook at `enrichment/enrichment.ipynb` imports the prepared Parquet dataset** from its local `data/` directory. It includes a local Ollama benchmark that compares Qwen3 4B and 8B, then selects Qwen3 8B for classification. No ticket text has yet been sent to the model.
 
-### Model Selection
+### Model Benchmark and Selection
 
-**Qwen3 8B is the selected model for local ticket classification.** Its 5.2 GB Q4 quantization leaves practical headroom on the M1 Pro with 16 GB unified memory, while Ollama uses Apple Metal acceleration for inference.
+**Qwen3 8B is selected for local ticket classification.** Qwen3 4B and 8B were compared on the 21-message held-out validation template, using the 23 labelled prompt-development messages as in-context examples. Both produced valid schema-constrained JSON for every message. Qwen3 8B achieved 81.0% sentiment agreement with manual labels, compared with 61.9% for Qwen3 4B, while taking 2.19 rather than 1.46 mean seconds per message. Its 28.6% exact-theme agreement modestly exceeded Qwen3 4B's 23.8%, although free-form theme wording makes exact matching a limited quality measure.
 
-A sentiment-only fine-tune would not address the equally important task of theme identification. **A useful specialist would require training on the project's ticket domain and theme taxonomy**, and no suitable documented industry-specific model was identified. Qwen3 is instead contextualized with the controlled taxonomy and manually labelled examples.
+**This benchmark is sufficient for the demonstration, not for a production-quality claim.** The available personal hardware cannot run frontier open-weight models such as Qwen3-235B-A22B or Llama 4 Maverick locally, and no secure server is available for this work. The same local-inference pipeline and methodology are expected to produce satisfactory production results with access to that infrastructure.
 
-Ollama is the **local model runtime**. The model weights are downloaded with `ollama pull qwen3:8b`, while ticket text is supplied only to the local runtime. The [official Ollama documentation](https://docs.ollama.com/) covers installation and runtime configuration.
+A sentiment-only fine-tune would not address the equally important task of theme identification. **A useful specialist would require training on the project's ticket domain and theme taxonomy**, and no suitable documented industry-specific model was identified. The general Qwen3 instruction models are instead contextualized with the manually labelled examples.
+
+Ollama is the **local model runtime**. The benchmark checks model availability, sends held-out messages only to the local endpoint, requests schema-constrained JSON with temperature zero and disabled reasoning, then records valid-output rate, exact label agreement, and seconds per message. The [official Ollama documentation](https://docs.ollama.com/) covers installation and runtime configuration.
 
 ### Text Profiling
 
@@ -95,9 +97,10 @@ Source-system labels balance sample coverage but are excluded from the manual-re
 
 | Assumption or failure mode | Pipeline behaviour |
 | --- | --- |
-| **The local model fits available memory.** | Qwen3 8B is selected over larger variants to avoid memory pressure during enrichment. |
-| **The Ollama service is available locally.** | Model calls cannot begin until the local runtime and `qwen3:8b` model are available. |
+| **The candidate models fit available memory.** | Qwen3 4B and 8B are benchmarked locally before one is selected for the demonstration workload. |
+| **The Ollama service and both candidates are available locally.** | Benchmarking stops with the required `ollama pull` commands if either model is missing. |
 | **Local inference protects ticket text.** | The classifier must call only the local Ollama endpoint, never a cloud inference provider. |
+| **The held-out labels are representative.** | The small validation set supports a demonstration selection only, not a production-quality performance claim. |
 | **Message collections align with source counts.** | Profiling validates each sequence against `customer_message_count` before any model labels are added. |
 | **Source labels are suitable as ground truth.** | They are used only to balance the review sample. Manual labels are based on message text and context. |
 
