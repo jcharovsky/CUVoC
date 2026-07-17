@@ -65,7 +65,7 @@ Import the Git repository as a Vercel project and use these settings:
 | Install Command | Default, `npm install` |
 | Build Command | Default, `npm run build` |
 | Output Directory | Default, managed by Next.js |
-| Production Branch | The branch containing `presentation`, currently `feat/dashboard` |
+| Production Branch | `main` |
 
 The Root Directory is `presentation`, not `root/presentation`. Vercel treats pushes to the Production Branch as Production deployments and pushes to other branches as Preview deployments. Configure branch tracking under **Project Settings → Environments → Production → Branch Tracking**. Vercel describes this behavior in its [Git deployment documentation](https://vercel.com/docs/git#production-branch).
 
