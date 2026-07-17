@@ -36,7 +36,7 @@ Feedback is more useful when tied to **a moment, touchpoint, segment, or behavio
 
 ### 3. Unify data before interpreting it
 
-The guides repeatedly **warn against siloed feedback**. Combining text with customer and operational context makes it possible to relate a theme to outcomes and distinguish systemic patterns from isolated anecdotes. A unified view does **not** require indiscriminate retention or linking of personal data; it must **respect data minimization and privacy constraints.**
+The guides repeatedly **warn against siloed feedback**. Combining text with customer and operational context makes it possible to relate a theme to outcomes and distinguish systemic patterns from isolated anecdotes. A unified view does **not** require indiscriminate retention or linking of personal data. It must **respect data minimization and privacy constraints.**
 
 ### 4. Convert raw feedback into evidence-backed themes
 
@@ -58,9 +58,9 @@ Support, product, operations, marketing, sales, and leadership affect the custom
 - **Customer Satisfaction Score (CSAT):** a measure of satisfaction with a specific interaction, product, service, or touchpoint. **Its definition depends on the question and scale used, so CUVoC must report the dataset’s actual values and response coverage rather than assume a universal formula.**
 - **Customer Effort Score (CES):** a measure of the perceived ease or difficulty of completing a task, resolving an issue, or obtaining help. **It is usually collected with a survey question and is not interchangeable with response or resolution time.**
 - **Retention:** the continued relationship with a customer during a defined observation period. **Its denominator, time window, and qualifying customer population must be stated before calculating a retention rate.**
-- **Churn:** the ending, cancellation, or loss of a customer relationship during a defined observation period. **In this assignment’s dataset, `has_churn` means a churn signal exists after the support contact; it does not establish that the ticket or its theme caused churn.**
+- **Churn:** the ending, cancellation, or loss of a customer relationship during a defined observation period. **In this assignment’s dataset, `has_churn` means a churn signal exists after the support contact. It does not establish that the ticket or its theme caused churn.**
 - **Effort:** the difficulty or ease a customer perceives while trying to accomplish a goal. **In text analysis, it is a model-derived signal inferred from language about friction, confusion, repeated attempts, or burdensome steps.** It is different from CES, which is a directly collected survey metric.
-- **Usage:** observed customer behavior in a product or service, such as login frequency, feature adoption, session activity, or order activity. **Usage describes what customers did; it does not by itself explain why they did it.**
+- **Usage:** observed customer behavior in a product or service, such as login frequency, feature adoption, session activity, or order activity. **Usage describes what customers did. It does not by itself explain why they did it.**
 - **Operational metrics:** measures of how the company’s service process performed. Relevant examples for CUVoC are first-response time, resolution time, SLA outcome, message count, and reopen count. **They describe service delivery, not the customer’s opinion of it.**
 
 ## Particular contributions from each source
@@ -97,7 +97,7 @@ Qualtrics adds the idea that text analytics should consider **sentiment, emotion
 - **Emotion is the specific feeling expressed or implied**, such as frustration, anger, anxiety, disappointment, relief, or delight. It answers: “How does this experience make the customer feel?” A comment can contain more than one emotion, and emotional intensity is separate from whether the statement is positive or negative.
 - **Effort is the customer’s perceived ease or difficulty** in completing a task, resolving an issue, or getting a request fulfilled. It answers: “How much friction did the customer encounter?” Repeated contacts, unclear steps, or a difficult process can signal high effort, but elapsed time alone does not define it.
 
-**Together, the signals prevent an important loss of meaning.** A customer can be negative because a delivery was late (sentiment), furious about it (emotion), yet have found resolution easy (effort); another can be neutral in tone but describe a highly difficult process. CUVoC should not infer these dimensions from a message without retaining the supporting text and presenting them as model-derived signals, not established facts. Its strongest operational point is that action planning needs named owners, deadlines, and cross-functional collaboration.
+**Together, the signals prevent an important loss of meaning.** A customer can be negative because a delivery was late (sentiment), furious about it (emotion), yet have found resolution easy (effort). Another can be neutral in tone but describe a highly difficult process. CUVoC should not infer these dimensions from a message without retaining the supporting text and presenting them as model-derived signals, not established facts. Its strongest operational point is that action planning needs named owners, deadlines, and cross-functional collaboration.
 
 ### Medallia
 
@@ -105,7 +105,7 @@ Medallia frames VoC analysis as a unified view of the customer journey that help
 
 ### CXPA CX Framework
 
-CXPA is not a vendor guide; it provides a professional competency frame. It places VoC under “Customer Insights and Understanding,” alongside qualitative and quantitative research, operational data, root-cause analysis, and predictive analysis. It distinguishes descriptive, perception, and outcome metrics, and stresses **translating data into clear communication and action**.
+CXPA is not a vendor guide. It provides a professional competency frame. It places VoC under “Customer Insights and Understanding,” alongside qualitative and quantitative research, operational data, root-cause analysis, and predictive analysis. It distinguishes descriptive, perception, and outcome metrics, and stresses **translating data into clear communication and action**.
 
 ## Tensions and contradictions
 
@@ -119,7 +119,7 @@ Most sources describe collection, analysis, then action. Gainsight labels its ph
 
 ### NPS as the central metric versus context-specific measurement
 
-CustomerGauge strongly centers NPS, especially monetized NPS for B2B. Zonka, Zendesk, Gainsight, Qualtrics, and CXPA present a broader metric mix, with CSAT and CES appropriate for specific touchpoints. **CUVoC should not elevate any unavailable metric to a universal KPI; it should use the outcome signals the dataset actually contains and state their coverage.**
+CustomerGauge strongly centers NPS, especially monetized NPS for B2B. Zonka, Zendesk, Gainsight, Qualtrics, and CXPA present a broader metric mix, with CSAT and CES appropriate for specific touchpoints. **CUVoC should not elevate any unavailable metric to a universal KPI. It should use the outcome signals the dataset actually contains and state their coverage.**
 
 ### Implied causality versus observational evidence
 
