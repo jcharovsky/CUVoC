@@ -96,7 +96,7 @@ The assistant is encapsulated behind `POST /api/chat`. The route validates the l
 2. Either Ask control opens the browser-local chat panel without navigating away from the overview.
 3. The panel sends its messages to `POST /api/chat` and displays `Thinking...` until response text begins streaming.
 4. The route accepts only the latest text-only user question, rejects malformed input, and limits the question to 500 characters. Client-supplied assistant history never reaches the model.
-5. The route combines the question with instructions and an allowlisted projection of aggregate metrics, chart series, themes, and written analysis, then requests at most 300 output tokens from the configured OpenAI model.
+5. The route combines the question with instructions and an allowlisted projection of aggregate metrics, chart series, themes, and written analysis, then allows up to 8,192 combined reasoning and answer tokens within a 60-second server execution window.
 6. OpenAI response storage is disabled, and the streamed answer remains only in the mounted browser session.
 
 ### Design Decisions
@@ -110,6 +110,7 @@ The assistant is encapsulated behind `POST /api/chat`. The route validates the l
 | **Dependency-light charting** | The initial trend chart uses accessible SVG markup and avoids committing to a visualization library before analytical requirements stabilize. |
 | **Explicit illustrative-data label** | Placeholder findings cannot be mistaken for results from the ticket analysis. |
 | **Direct OpenAI integration** | Vercel AI SDK handles browser chat state and response streaming, while the direct provider keeps a single inference dependency and server-held credential. |
+| **Generous response budget** | GPT-5 mini uses low reasoning effort and an 8,192-token combined allowance so broad questions have ample reasoning headroom before emitting their concise answer. The route permits 60 seconds for cold starts and inference, while `OPENAI_MODEL` retains deployment-level override control. |
 | **Full-context grounding** | The small curated artifact fits in every request, so retrieval, vector storage, file search, graph vision, tools, and web access add no useful capability. |
 | **Stateless, single-question endpoint** | Conversation display stays in the browser, while each model request receives only the latest question. This avoids a database, fabricated assistant history, user identity, and a retention policy. |
 | **Bounded assistant interface** | Question length, output length, text-only content, explicit context fields, and scope instructions constrain cost, data exposure, and off-topic behavior. |

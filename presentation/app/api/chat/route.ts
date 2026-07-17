@@ -5,7 +5,7 @@ import {
   sanitizeChatQuestion,
 } from "@/lib/dashboard-assistant";
 
-export const maxDuration = 30;
+export const maxDuration = 60;
 
 export async function POST(request: Request) {
   if (!process.env.OPENAI_API_KEY) {
@@ -37,10 +37,11 @@ export async function POST(request: Request) {
     model: openai.responses(process.env.OPENAI_MODEL ?? "gpt-5-mini"),
     system: dashboardAssistantInstructions,
     messages: await convertToModelMessages([question]),
-    maxOutputTokens: 300,
+    maxOutputTokens: 8192,
     providerOptions: {
       openai: {
         store: false,
+        reasoningEffort: "low",
         textVerbosity: "low",
       } satisfies OpenAILanguageModelResponsesOptions,
     },
